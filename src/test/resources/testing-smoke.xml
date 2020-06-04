@@ -2,7 +2,7 @@
 <suite name="Smoke" verbose="1" >
     <test name="Smoke test"   >
         <classes>
-            <class name="test.OpenMainPage" />
+            <class name="test.OpenMainPageTest" />
         </classes>
     </test>
 </suite>
