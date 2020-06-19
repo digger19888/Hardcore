@@ -12,25 +12,14 @@ public class MainPage extends AbstractPage {
 
     private final String CLOUD_BASE_URL = "https://cloud.google.com/";
 
-//    @FindBy(xpath = "cloudx-tabs-nav a[data-label='Tab: Products']")
-//    private WebElement productsDDLBtn;
-//
-//    @FindBy(xpath = "div.dropdown-tabbed-menu-button > a[track-name~=Products]")
-//    private WebElement allProductsBtn;
-
     private final By nameMainPageLocator = By.xpath("//meta[@property='og:site_name']");
-
+    private WebElement productsDDL = driver.findElement(By.xpath("cloudx-tabs-nav a[data-label='Tab: Products']"));
+    private WebElement allProductsBtn = driver.findElement(By.xpath("div.dropdown-tabbed-menu-button > a[track-name~=Products]"));
     public MainPage(WebDriver driver)
     {
         super(driver);
         PageFactory.initElements(this.driver, this);
     }
-
-//    public TryOpenMainPage makeMainPageOpen{
-//        productsDDLBtn.click();
-//        allProductsBtn.click();
-//        return new TryOpenMainPage(driver);
-//    }
 
     @Override
     public MainPage openPage() {
@@ -38,10 +27,17 @@ public class MainPage extends AbstractPage {
         return null;
     }
 
-    public String getOpenedMainPage()
-    {
-        WebElement nameMainPage = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(nameMainPageLocator));
-        return nameMainPage.getAttribute("Google Cloud");
-    }
+    public ProductsPage openProductsPage() {
+        LOGGER.info(LOG_MESSAGE);
+        productsDDL.shouldBe(Condition.visible).click();
+        allProductsBtn.shouldBe(Condition.visible).click();
+        return new ProductsPage();
+
+
+//    public String getOpenedMainPage()
+//    {
+//        WebElement nameMainPage = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+//                .until(ExpectedConditions.presenceOfElementLocated(nameMainPageLocator));
+//        return nameMainPage.getAttribute("Google Cloud");
+//    }
 }
