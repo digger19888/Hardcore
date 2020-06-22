@@ -25,7 +25,7 @@ public class ProductsPage extends AbstractPage {
         LOGGER.info(LOG_MESSAGE);
         wait.until(ExpectedConditions.visibilityOf(seePricingBtn));
         seePricingBtn.click();
-        return new PricingPage();
+        return new PricingPage(driver);
     }
 
 }

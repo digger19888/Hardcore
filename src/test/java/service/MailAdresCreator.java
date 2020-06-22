@@ -37,7 +37,7 @@ public class MailAdresCreator extends AbstractPage {
         tabSwitcher.switchToNewTab();
 
         driver.navigate().to(EMAIL_ADDRESS_URL);
-        String email = getValueFromJsonRow().contains("body > pre");
+        String email = getValueFromJsonRow("body > pre");
 
         tabSwitcher.closeCurrentWindowAndSwitchBackToPreviousTab();
         LOGGER.info("email received: " + email);
@@ -48,7 +48,7 @@ public class MailAdresCreator extends AbstractPage {
         LOGGER.info(LOG_MESSAGE);
         waitUntilEmailReceived();
         email_top.click();
-        wait.until(ExpectedConditions.visibilityOf(total_estimatioin_message))
+        wait.until(ExpectedConditions.visibilityOf(total_estimatioin_message));
         String estimation = total_estimatioin_message.getText();
         LOGGER.info("total estimation text: " + estimation);
         return RowCutter.removeCharsBeforeColon(estimation);

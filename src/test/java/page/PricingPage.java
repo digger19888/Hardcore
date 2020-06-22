@@ -25,7 +25,7 @@ public class PricingPage extends AbstractPage {
         LOGGER.info(LOG_MESSAGE);
         wait.until(ExpectedConditions.visibilityOf(calculatorsLink));
         calculatorsLink.click();
-        return new CalculatorPage();
+        return new CalculatorPage(driver);
     }
 
 }

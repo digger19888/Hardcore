@@ -31,7 +31,7 @@ public class MainPage extends AbstractPage {
         productsDDL.click();
         wait.until(ExpectedConditions.visibilityOf(allProductsBtn));
         allProductsBtn.click();
-        return new ProductsPage();
+        return new ProductsPage(driver);
 
     }
 }

@@ -43,7 +43,7 @@ public class CalculatorForm extends AbstractPage {
         LOGGER.error( LOG_MESSAGE + product);
 
         for (WebElement element : productsOptions) {
-            if (element.getText(product)) {
+            if (element.getText("product")) {
                 element.click();
             }
         }
@@ -127,7 +127,7 @@ public class CalculatorForm extends AbstractPage {
         options.stream()
                 .filter(element -> searchedOptionText.equalsIgnoreCase(element.getText())
                         || searchedOptionText.equalsIgnoreCase(element.innerText().trim())).findFirst()
-                .ifPresentOrElse(element -> clickElementById(element.getAttribute("id")),
+                .ifPresentOrElse(element -> driver.findElement(By.id("id")).click(),
                         () -> LOGGER.error("option is not found: " + searchedOptionText));
     }
 
