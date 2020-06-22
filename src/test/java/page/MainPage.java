@@ -10,13 +10,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MainPage extends AbstractPage {
 
-    private final String CLOUD_BASE_URL = "https://cloud.google.com/";
-
-    private final By nameMainPageLocator = By.xpath("//meta[@property='og:site_name']");
+    private static final String LOG_MESSAGE = "try";
     private WebElement productsDDL = driver.findElement(By.xpath("cloudx-tabs-nav a[data-label='Tab: Products']"));
     private WebElement allProductsBtn = driver.findElement(By.xpath("div.dropdown-tabbed-menu-button > a[track-name~=Products]"));
-    public MainPage(WebDriver driver)
-    {
+
+    public MainPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(this.driver, this);
     }
@@ -29,15 +27,11 @@ public class MainPage extends AbstractPage {
 
     public ProductsPage openProductsPage() {
         LOGGER.info(LOG_MESSAGE);
-        productsDDL.shouldBe(Condition.visible).click();
-        allProductsBtn.shouldBe(Condition.visible).click();
+        wait.until(ExpectedConditions.visibilityOf(productsDDL));
+        productsDDL.click();
+        wait.until(ExpectedConditions.visibilityOf(allProductsBtn));
+        allProductsBtn.click();
         return new ProductsPage();
 
-
-//    public String getOpenedMainPage()
-//    {
-//        WebElement nameMainPage = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-//                .until(ExpectedConditions.presenceOfElementLocated(nameMainPageLocator));
-//        return nameMainPage.getAttribute("Google Cloud");
-//    }
+    }
 }
