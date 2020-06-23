@@ -11,7 +11,7 @@ public class PricingPage extends AbstractPage {
     private static final String CLOUD_PRICING_URL = CLOUD_BASE_URL + "pricing";
     private WebElement calculatorsLink = driver.findElement(By.xpath("div.cloud-jump-menu__links a[href*=calculators]"));
 
-    protected PricingPage(WebDriver driver) {
+    public PricingPage(WebDriver driver) {
         super(driver);
     }
 

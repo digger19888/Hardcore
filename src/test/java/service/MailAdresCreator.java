@@ -20,8 +20,12 @@ public class MailAdresCreator extends AbstractPage {
     private WebElement email_top = driver.findElement(By.xpath("#mail_messages_content div.message_top"));
     private WebElement total_estimatioin_message = driver.findElement(By.xpath("#mobilepadding > td > h2"));
 
-    protected MailAdresCreator(WebDriver driver) {
+    public MailAdresCreator(WebDriver driver) {
         super(driver);
+    }
+
+    public MailAdresCreator() {
+        super();
     }
 
     public MailAdresCreator openPage() {

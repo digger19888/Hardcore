@@ -11,7 +11,7 @@ public class CalculatorPage extends AbstractPage {
     private static final String CLOUD_CALCULATOR_URL = CLOUD_BASE_URL + "products/calculator";
     private WebElement calculatorForm = driver.findElement(By.xpath("#cloud-site > devsite-iframe > iframe"));
 
-    protected CalculatorPage(WebDriver driver) {
+    public CalculatorPage(WebDriver driver) {
         super(driver);
     }
 

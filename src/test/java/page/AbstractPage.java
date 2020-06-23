@@ -9,6 +9,11 @@ public abstract class AbstractPage
 {
     protected WebDriver driver;
     protected WebDriverWait wait;
+
+    public AbstractPage() {
+
+    }
+
     protected abstract AbstractPage openPage();
     protected static final Logger LOGGER = LogManager.getRootLogger();
     protected final int WAIT_TIMEOUT_SECONDS = 10;

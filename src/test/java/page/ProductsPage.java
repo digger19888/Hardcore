@@ -11,7 +11,7 @@ public class ProductsPage extends AbstractPage {
     private static final String CLOUD_PRODUCTS_URL = CLOUD_BASE_URL + "products";
     private WebElement seePricingBtn = driver.findElement(By.xpath("#google-cloud-products  a.cloud-button.cloud-button--secondary"));
 
-    protected ProductsPage(WebDriver driver) {
+    public ProductsPage(WebDriver driver) {
         super(driver);
     }
 
