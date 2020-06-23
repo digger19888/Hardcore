@@ -16,9 +16,9 @@ public class MailAdresCreator extends AbstractPage {
     private static final String EMAIL_SERVICE_URL = "https://10minutemail.com/";
     private static final String EMAIL_ADDRESS_URL = "https://10minutemail.com/session/address";
 
-    private WebElement email_counter = driver.findElement(By.xpath("#inbox_count_number"));
-    private WebElement email_top = driver.findElement(By.xpath("#mail_messages_content div.message_top"));
-    private WebElement total_estimatioin_message = driver.findElement(By.xpath("#mobilepadding > td > h2"));
+    private WebElement email_counter;
+    private WebElement email_top;
+    private WebElement total_estimatioin_message;
 
     public MailAdresCreator(WebDriver driver) {
         super(driver);
@@ -27,6 +27,10 @@ public class MailAdresCreator extends AbstractPage {
     public MailAdresCreator openPage() {
         LOGGER.info(LOG_MESSAGE);
         driver.navigate().to(EMAIL_SERVICE_URL);
+//        wait.until(ExpectedConditions.visibilityOf(email_counter));
+//        email_counter = driver.findElement(By.xpath("#inbox_count_number"));
+//        email_top = driver.findElement(By.xpath("#mail_messages_content div.message_top"));
+//        total_estimatioin_message = driver.findElement(By.xpath("#mobilepadding > td > h2"));
         return this;
     }
 
