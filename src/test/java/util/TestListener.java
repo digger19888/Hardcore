@@ -25,7 +25,7 @@ public class TestListener implements ITestListener {
     }
 
     public void onTestFailure(ITestResult iTestResult) {
-        saveScreenshot();
+//        saveScreenshot();
     }
 
     public void onTestSkipped(ITestResult iTestResult) {
@@ -43,14 +43,14 @@ public class TestListener implements ITestListener {
 
     }
 
-    private void saveScreenshot() {
+    public void saveScreenshot(String name) {
         File screenCapture = ((TakesScreenshot) DriverSingleton
                 .getDriver())
                 .getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(screenCapture, new File(
                     ".//target/screenshots/"
-                            + getCurrentTimeAsString() +
+                            + name +
                             ".png"));
         } catch (IOException e) {
             log.error("Failed to save screenshot: " + e.getLocalizedMessage());

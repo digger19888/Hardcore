@@ -9,11 +9,11 @@ public class CalculatorFormTest extends CommonConditions {
         @Test
         public void checkSetNumberOfInstances() {
             String expectedValue = "4";
-            String value = new CalculatorPage()
+            String value = new CalculatorPage(driver)
                     .openPage()
-                    .getCalculatorInputIframe()
+                    .getCalculatorInputForm()
                     .setNumberOfInstances(Integer.parseInt(expectedValue))
-                    .getInstancesInputField().getValue();
+                    .getInstancesInputField().getText();
             Assert.assertEquals(value, expectedValue);
         }
 

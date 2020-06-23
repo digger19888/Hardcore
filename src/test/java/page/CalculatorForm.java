@@ -40,10 +40,10 @@ public class CalculatorForm extends AbstractPage {
     public CalculatorForm selectProduct(String product) {
         wait.until(ExpectedConditions.visibilityOf(productInputField));
         productInputField.click();
-        LOGGER.error( LOG_MESSAGE + product);
+        LOGGER.error(LOG_MESSAGE + product);
 
         for (WebElement element : productsOptions) {
-            if (element.getText("product")) {
+            if (element.getText().equals("product")) {
                 element.click();
             }
         }
@@ -51,20 +51,20 @@ public class CalculatorForm extends AbstractPage {
     }
 
     public CalculatorForm setNumberOfInstances(int numberOfInstances) {
-        LOGGER.info( LOG_MESSAGE + numberOfInstances);
+        LOGGER.info(LOG_MESSAGE + numberOfInstances);
         wait.until(ExpectedConditions.visibilityOf(instancesInputField));
         instancesInputField.sendKeys(Integer.toString(numberOfInstances));
         return this;
     }
 
     public CalculatorForm selectMachineType(String machineType) {
-        LOGGER.info( LOG_MESSAGE + machineType);
+        LOGGER.info(LOG_MESSAGE + machineType);
         openOptionsListAndSelectOption(defaultMachineTypeOptionId, machineTypeOptions, machineType);
         return this;
     }
 
     public CalculatorForm addGpus(int numberOfGpus, String gpuType) {
-        LOGGER.info( LOG_MESSAGE + "number = " + numberOfGpus + ", type = " + gpuType);
+        LOGGER.info(LOG_MESSAGE + "number = " + numberOfGpus + ", type = " + gpuType);
         clickElementByCss(addGpusCheckboxSelector);
         openOptionsListAndSelectOption(defaultNumberOfGpusOptionId, numberOfGpusOptions, Integer.toString(numberOfGpus));
         openOptionsListAndSelectOption(defaultGpuTypeOptionId, gpuTypeOptions, gpuType);
@@ -78,13 +78,13 @@ public class CalculatorForm extends AbstractPage {
     }
 
     public CalculatorForm selectDatacenterLocation(String datacenterLocation) {
-        LOGGER.info( LOG_MESSAGE + datacenterLocation);
+        LOGGER.info(LOG_MESSAGE + datacenterLocation);
         openOptionsListAndSelectOption(defaultDatacentrLocationOptionId, datacentrLocationOptions, datacenterLocation);
         return this;
     }
 
     public CalculatorForm selectCommittedUsage(String committedUsage) {
-        LOGGER.info( LOG_MESSAGE + committedUsage);
+        LOGGER.info(LOG_MESSAGE + committedUsage);
         openOptionsListAndSelectOption(defaultCommittedUsageOptionId, committedUsageOptions, committedUsage);
         return this;
     }
@@ -95,9 +95,9 @@ public class CalculatorForm extends AbstractPage {
         return this;
     }
 
-    public String getTotalEstimationText(){
+    public String getTotalEstimationText() {
         LOGGER.info(LOG_MESSAGE);
-        wait.until(ExpectedConditions.visibilityOf(totalEstimationTextSelector));
+        wait.until(ExpectedConditions. (totalEstimationTextSelector));
         String result = new FindBy(totalEstimationTextSelector).getText();
         LOGGER.info("total estimation text: " + result);
         return RowCutter.removeCharsBeforeColon(result);
@@ -109,11 +109,11 @@ public class CalculatorForm extends AbstractPage {
         return this;
     }
 
-    public CalculatorForm sendEstimateToEmail(String email){
-        LOGGER.info( LOG_MESSAGE + email);
+    public CalculatorForm sendEstimateToEmail(String email) {
+        LOGGER.info(LOG_MESSAGE + email);
         driver.switchTo().activeElement();
         wait.until(ExpectedConditions.visibilityOf(emailInputFieldSelector));
-        emailInputFieldSelector.sendKeys(email);
+        emailInputFieldSelector.sendKeys();
         clickElementByCss(sendEmailBtnSelector);
         return this;
     }
@@ -126,9 +126,8 @@ public class CalculatorForm extends AbstractPage {
     private void selectOptionFromList(List<WebElement> options, String searchedOptionText) {
         options.stream()
                 .filter(element -> searchedOptionText.equalsIgnoreCase(element.getText())
-                        || searchedOptionText.equalsIgnoreCase(element.innerText().trim())).findFirst()
-                .ifPresentOrElse(element -> driver.findElement(By.id("id")).click(),
-                        () -> LOGGER.error("option is not found: " + searchedOptionText));
+                        || searchedOptionText.equalsIgnoreCase(element.getText().trim())).findFirst()
+                .ifPresent(element -> driver.findElement(By.id("id")).click());
     }
 
     public WebElement getInstancesInputField() {

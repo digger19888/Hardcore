@@ -1,32 +1,26 @@
 package test;
 
-import ru.yandex.qatools.ashot.AShot;
-import ru.yandex.qatools.ashot.Screenshot;
-import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.CalculatorForm;
 import page.MainPage;
 import service.MailAdresCreator;
 import util.BrowserTabSwitcher;
-
-import java.io.File;
+import util.TestListener;
 
 public class MainTest extends CommonConditions {
+
+    private final TestListener testListener = new TestListener();
 
     @Test
     public void checkEstimationsEquals() throws InterruptedException {
 
-        CalculatorForm calculatorForm = new MainPage().openPage()
+        CalculatorForm calculatorForm = new MainPage(driver).openPage()
                 .openProductsPage()/*doesn't work*/
                 .openPage()
                 .openPricingPage()
                 .openCalculatorPage()
-                .getCalculatorInputIframe()
+                .getCalculatorInputForm()
                 .selectProduct("COMPUTE ENGINE") /*incorrect behavior*/
                 .setNumberOfInstances(4)
                 .selectMachineType("n1-standard-8 (vCPUs: 8, RAM: 30GB)")
@@ -37,7 +31,7 @@ public class MainTest extends CommonConditions {
                 .clickAddToEstimate();
 
         String estimationFromSite = calculatorForm.getTotalEstimationText();
-        this.Take("estimation_from_site");
+        testListener.saveScreenshot("estimation_from_site");
         calculatorForm.clickEmailEstimate();
 
         BrowserTabSwitcher tabSwitcher = new BrowserTabSwitcher();
@@ -51,7 +45,7 @@ public class MainTest extends CommonConditions {
         calculatorForm.sendEstimateToEmail(email);
         tabSwitcher.switchToNextToCurrentTab();
         String estimationFromEmail = emailPage.getTotalEstimationMessage();
-        driver.screenshot("estimation_from_email");
+        testListener.saveScreenshot("estimation_from_email");
 
         Assert.assertTrue(estimationFromSite.contains(estimationFromEmail));
     }

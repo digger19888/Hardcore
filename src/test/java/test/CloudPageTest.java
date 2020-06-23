@@ -13,26 +13,26 @@ public class CloudPageTest extends CommonConditions {
 
     @Test
     public void checkOpenMainPage() {
-        new MainPage().openPage();
+        new MainPage(driver).openPage();
         Assert.assertEquals(url, "https://cloud.google.com/");
     }
 
     @Test
     public void checkOpenProductPageFromMain() {
-        new MainPage().openPage()
+        new MainPage(driver).openPage()
                 .openProductsPage();
         Assert.assertEquals(url, "https://cloud.google.com/products");
     }
 
     @Test
     public void checkOpenProductPage() {
-        new ProductsPage().openPage();
+        new ProductsPage(driver).openPage();
         Assert.assertEquals(url, "https://cloud.google.com/products");
     }
 
     @Test
     public void checkOpenPricingPageFromMain() {
-        new MainPage().openPage()
+        new MainPage(driver).openPage()
                 .openProductsPage().openPage()
                 .openPricingPage();
         Assert.assertEquals(url, "https://cloud.google.com/pricing");
@@ -40,13 +40,13 @@ public class CloudPageTest extends CommonConditions {
 
     @Test
     public void checkOpenPricingPage() {
-        new PricingPage().openPage();
+        new PricingPage(driver).openPage();
         Assert.assertEquals(url, "https://cloud.google.com/pricing");
     }
 
     @Test
     public void checkOpenCalculatorPageFromMain() {
-        new MainPage().openPage()
+        new MainPage(driver).openPage()
                 .openProductsPage().openPage()
                 .openPricingPage()
                 .openCalculatorPage();
@@ -55,7 +55,7 @@ public class CloudPageTest extends CommonConditions {
 
     @Test
     public void checkOpenCalculatorPage() {
-        new CalculatorPage().openPage();
+        new CalculatorPage(driver).openPage();
         Assert.assertEquals(url, "https://cloud.google.com/products/calculator");
     }
 
