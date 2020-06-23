@@ -23,6 +23,8 @@ public class CalculatorForm extends AbstractPage {
     private List<WebElement> localSsdOptions = driver.findElements(By.xpath("#select_container_171 md-option"));
     private List<WebElement> datacentrLocationOptions = driver.findElements(By.xpath("#select_container_86 md-option"));
     private List<WebElement> committedUsageOptions = driver.findElements(By.xpath("#select_container_93 md-option"));
+    private WebElement totalEstimationTextSelector = driver.findElement(By.xpath("#resultBlock > md-card > md-card-content > div > div > div > h2 > b"));
+    private WebElement emailInputFieldSelector = driver.findElement(By.xpath("form[name=\"emailForm\"] input[ng-model=\"emailQuote.user.email\"]"));
 
     private String defaultMachineTypeOptionId = "select_value_label_55";
     private String addGpusCheckboxSelector = "md-checkbox[aria-label=\"Add GPUs\"]";
@@ -32,10 +34,15 @@ public class CalculatorForm extends AbstractPage {
     private String defaultDatacentrLocationOptionId = "select_option_172";
     private String defaultCommittedUsageOptionId = "select_option_89";
     private String addToEstimateBtnSelector = "div:nth-child(1) > form button[aria-label=\"Add to Estimate\"]";
-    private String totalEstimationTextSelector = "#resultBlock > md-card > md-card-content > div > div > div > h2 > b";
+//    private String totalEstimationTextSelector = "#resultBlock > md-card > md-card-content > div > div > div > h2 > b";
     private String emailEstimateBtnId = "email_quote";
-    private String emailInputFieldSelector = "form[name=\"emailForm\"] input[ng-model=\"emailQuote.user.email\"]";
+//    private String emailInputFieldSelector = "form[name=\"emailForm\"] input[ng-model=\"emailQuote.user.email\"]";
     private String sendEmailBtnSelector = "form[name=\"emailForm\"] button[aria-label=\"Send Email\"]";
+
+    @Override
+    protected AbstractPage openPage() {
+        return null;
+    }
 
     public CalculatorForm selectProduct(String product) {
         wait.until(ExpectedConditions.visibilityOf(productInputField));
@@ -97,8 +104,8 @@ public class CalculatorForm extends AbstractPage {
 
     public String getTotalEstimationText() {
         LOGGER.info(LOG_MESSAGE);
-        wait.until(ExpectedConditions. (totalEstimationTextSelector));
-        String result = new FindBy(totalEstimationTextSelector).getText();
+        wait.until(ExpectedConditions.visibilityOf(totalEstimationTextSelector));
+        String result = totalEstimationTextSelector.getText();
         LOGGER.info("total estimation text: " + result);
         return RowCutter.removeCharsBeforeColon(result);
     }
@@ -113,7 +120,7 @@ public class CalculatorForm extends AbstractPage {
         LOGGER.info(LOG_MESSAGE + email);
         driver.switchTo().activeElement();
         wait.until(ExpectedConditions.visibilityOf(emailInputFieldSelector));
-        emailInputFieldSelector.sendKeys();
+        emailInputFieldSelector.sendKeys(email);
         clickElementByCss(sendEmailBtnSelector);
         return this;
     }
