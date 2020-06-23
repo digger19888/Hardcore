@@ -17,19 +17,18 @@ public class MainPage extends AbstractPage {
         PageFactory.initElements(this.driver, this);
     }
 
-    public MainPage openPage() {
+    public MainPage openMainPage() {
         driver.navigate().to(cloudBaseUrl);
         return this;
     }
 
-    public ProductsPage openProductsPage() {
+    public CloudProductsPage openCloudProductsPage() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/section/devsite-header/div/div[1]/div/div/div[2]/div[1]/cloudx-tabs-nav/div/tab[3]/a[1]")));
         productsDDL = driver.findElement(By.xpath("/html/body/section/devsite-header/div/div[1]/div/div/div[2]/div[1]/cloudx-tabs-nav/div/tab[3]/a[1]"));
         productsDDL.click();
+        allProductsBtn = driver.findElement(By.xpath("//tab/a[@href='/products']"));
         wait.until(ExpectedConditions.visibilityOf(allProductsBtn));
-        allProductsBtn = driver.findElement(By.xpath("div.dropdown-tabbed-menu-button > a[track-name~=Products]"));
         allProductsBtn.click();
-        return new ProductsPage(driver);
-
+        return new CloudProductsPage(driver);
     }
 }

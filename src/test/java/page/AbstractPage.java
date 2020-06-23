@@ -16,7 +16,7 @@ public abstract class AbstractPage {
 
     protected AbstractPage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(this.driver, 30);
+        wait = new WebDriverWait(this.driver, 15);
         wait.ignoring(StaleElementReferenceException.class);
     }
 }

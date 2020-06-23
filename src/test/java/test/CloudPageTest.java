@@ -1,6 +1,5 @@
 package test;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.CalculatorPage;
@@ -13,14 +12,13 @@ public class CloudPageTest extends CommonConditions {
 
     @Test
     public void checkOpenMainPage() {
-        new MainPage(driver).openPage();
+        new MainPage(driver).openCloudProductsPage();
         Assert.assertEquals(url, "https://cloud.google.com/");
     }
 
     @Test
     public void checkOpenProductPageFromMain() {
-        new MainPage(driver).openPage()
-                .openProductsPage();
+        new MainPage(driver).openCloudProductsPage();
         Assert.assertEquals(url, "https://cloud.google.com/products");
     }
 
@@ -32,8 +30,7 @@ public class CloudPageTest extends CommonConditions {
 
     @Test
     public void checkOpenPricingPageFromMain() {
-        new MainPage(driver).openPage()
-                .openProductsPage().openPage()
+        new MainPage(driver).openCloudProductsPage()
                 .openPricingPage();
         Assert.assertEquals(url, "https://cloud.google.com/pricing");
     }
@@ -46,8 +43,7 @@ public class CloudPageTest extends CommonConditions {
 
     @Test
     public void checkOpenCalculatorPageFromMain() {
-        new MainPage(driver).openPage()
-                .openProductsPage().openPage()
+        new MainPage(driver).openCloudProductsPage()
                 .openPricingPage()
                 .openCalculatorPage();
         Assert.assertEquals(url, "https://cloud.google.com/products/calculator");

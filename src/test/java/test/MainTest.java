@@ -15,9 +15,8 @@ public class MainTest extends CommonConditions {
     @Test
     public void checkEstimationsEquals() throws InterruptedException {
 
-        CalculatorForm calculatorForm = new MainPage(driver).openPage()
-                .openProductsPage()/*doesn't work*/
-                .openPage()
+        CalculatorForm calculatorForm = new MainPage(driver).openMainPage()
+                .openCloudProductsPage()
                 .openPricingPage()
                 .openCalculatorPage()
                 .getCalculatorInputForm()
