@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class PricingPage extends AbstractPage {
 
     private String cloudPricingUrl = cloudBaseUrl + "pricing";
-    private String calculatorsLinkXpath = "div.cloud-jump-menu__links a[href*=calculators]";
+    private String calculatorsLinkXpath = "//li/a[@href='/products/calculator']/div[1]";
 
     public PricingPage(WebDriver driver) {
         super(driver);
@@ -20,6 +20,7 @@ public class PricingPage extends AbstractPage {
     }
 
     public CalculatorPage openCalculatorPage() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(calculatorsLinkXpath)));
         WebElement calculatorsLink = driver.findElement(By.xpath(calculatorsLinkXpath));
         wait.until(ExpectedConditions.visibilityOf(calculatorsLink));
         calculatorsLink.click();
