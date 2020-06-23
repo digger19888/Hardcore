@@ -7,8 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ProductsPage extends AbstractPage {
 
-    private static final String LOG_MESSAGE = "try";
-    private static final String CLOUD_PRODUCTS_URL = CLOUD_BASE_URL + "products";
+    private String cloudProductsUrl = cloudBaseUrl + "products";
     private WebElement seePricingBtn = driver.findElement(By.xpath("#google-cloud-products  a.cloud-button.cloud-button--secondary"));
 
     public ProductsPage(WebDriver driver) {
@@ -16,13 +15,11 @@ public class ProductsPage extends AbstractPage {
     }
 
     public ProductsPage openPage() {
-        LOGGER.info(LOG_MESSAGE);
-        driver.navigate().to(CLOUD_PRODUCTS_URL);
+        driver.navigate().to(cloudProductsUrl);
         return this;
     }
 
     public PricingPage openPricingPage(){
-        LOGGER.info(LOG_MESSAGE);
         wait.until(ExpectedConditions.visibilityOf(seePricingBtn));
         seePricingBtn.click();
         return new PricingPage(driver);

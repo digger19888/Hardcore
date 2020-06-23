@@ -1,6 +1,7 @@
 package page;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -34,14 +35,13 @@ public class CalculatorForm extends AbstractPage {
     private String defaultDatacentrLocationOptionId = "select_option_172";
     private String defaultCommittedUsageOptionId = "select_option_89";
     private String addToEstimateBtnSelector = "div:nth-child(1) > form button[aria-label=\"Add to Estimate\"]";
-//    private String totalEstimationTextSelector = "#resultBlock > md-card > md-card-content > div > div > div > h2 > b";
+    //    private String totalEstimationTextSelector = "#resultBlock > md-card > md-card-content > div > div > div > h2 > b";
     private String emailEstimateBtnId = "email_quote";
-//    private String emailInputFieldSelector = "form[name=\"emailForm\"] input[ng-model=\"emailQuote.user.email\"]";
+    //    private String emailInputFieldSelector = "form[name=\"emailForm\"] input[ng-model=\"emailQuote.user.email\"]";
     private String sendEmailBtnSelector = "form[name=\"emailForm\"] button[aria-label=\"Send Email\"]";
 
-    @Override
-    protected AbstractPage openPage() {
-        return null;
+    public CalculatorForm(WebDriver driver) {
+        super(driver);
     }
 
     public CalculatorForm selectProduct(String product) {
