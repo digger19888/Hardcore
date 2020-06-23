@@ -24,10 +24,6 @@ public class MailAdresCreator extends AbstractPage {
         super(driver);
     }
 
-    public MailAdresCreator() {
-        super();
-    }
-
     public MailAdresCreator openPage() {
         LOGGER.info(LOG_MESSAGE);
         driver.navigate().to(EMAIL_SERVICE_URL);

@@ -37,7 +37,7 @@ public class MainTest extends CommonConditions {
         BrowserTabSwitcher tabSwitcher = new BrowserTabSwitcher();
         tabSwitcher.switchToNewTab();
 
-        MailAdresCreator emailPage = new MailAdresCreator().openPage();
+        MailAdresCreator emailPage = new MailAdresCreator(driver).openPage();
         String email = emailPage.getEmail();
 //        String email = "stubEmail@mil.com";
 

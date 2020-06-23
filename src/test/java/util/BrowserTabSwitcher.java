@@ -57,11 +57,11 @@ public class BrowserTabSwitcher {
 
     private void saveCurrentBrowserTabAndFrame() {
         currentBrowserTab = driver.getWindowHandle();
-        LOGGER.info("current browser tab: " + url() + "tab name: " + currentBrowserTab);
-        if (!url().equals(currentFrameUrl())) {
-            currentFrame = currentFrameUrl();
-            LOGGER.info("current frame: " + currentFrame);
-        }
+        LOGGER.info("current browser tab: " + driver.getCurrentUrl() + "tab name: " + currentBrowserTab);
+//        if (!driver.getCurrentUrl().equals(currentFrameUrl())) {
+//            currentFrame = currentFrameUrl();
+//            LOGGER.info("current frame: " + currentFrame);
+//        }
     }
 
     private String getNameOrIdOfIframe(WebElement iframe) {
