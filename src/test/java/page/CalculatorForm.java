@@ -17,8 +17,8 @@ public class CalculatorForm extends AbstractPage {
 //    private List<WebElement> productsOptions = driver.findElements(By.xpath("#ul-0 > li"));
     private String instancesInputFieldXpath = "//input[@id='input_58']";
     private String machineTypeFieldXpath = "//*[@id='select_83']//span[@class]";
-    private String numberOfGpusOptionsXpath = "//*[@id='select_337']";
-    private String gpuTypeOptionsXpath = "//*[@id='select_339']";
+    private String numberOfGpusXpath = "//*[@id='select_453']//span[@class='md-select-icon']";
+    private String gpuTypeOptionsXpath = "//*[@id='select_455']//span[@class='md-select-icon']";
     private String localSsdOptionsXpath = "//*[@id='select_170']";
     private String datacentrLocationOptionsXpath = "//*[@id='select_85']";
     private String committedUsageOptionsXpath = "//*[@id='select_92']";
@@ -27,9 +27,9 @@ public class CalculatorForm extends AbstractPage {
 
     private String defaultMachineTypeOptionId = "//div[contains(text(),'%s')]";
     private String addGpusCheckboxXpath = "//md-checkbox[@aria-label='Add GPUs']/div[@class='md-container md-ink-ripple']";
-    private String addGpusCheckboxSelector = "md-checkbox[aria-label=\"Add GPUs\"]";
-    private String defaultNumberOfGpusOptionId = "select_option_428";
-    private String defaultGpuTypeOptionId = "select_option_343";
+//    private String addGpusCheckboxSelector = "md-checkbox[aria-label=\"Add GPUs\"]";
+    private String defaultNumberOfGpusOptionId = "//div[contains(text(),'%s')]";
+    private String defaultGpuTypeOptionId = "//div[contains(text(),'%s')]";
     private String defaultLocalSsdOptionId = "select_option_231";
     private String defaultDatacentrLocationOptionId = "select_option_172";
     private String defaultCommittedUsageOptionId = "select_option_89";
@@ -73,15 +73,31 @@ public class CalculatorForm extends AbstractPage {
         return this;
     }
 
+    public CalculatorForm checkGPUsValue() {
+
+        WebElement checkGpusCheckbox = driver.findElement(By.xpath(addGpusCheckboxXpath));
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        executor.executeScript("arguments[0].click();", checkGpusCheckbox);
+        return this;
+    }
+
     public CalculatorForm addGpus(int numberOfGpus, String gpuType) {
-//        driver.switchTo().defaultContent();
-        clickElementByCss(addGpusCheckboxSelector);
-//        WebElement chekbox = driver.findElement(By.xpath(machineTypeFieldXpath));
-//        JavascriptExecutor executor = (JavascriptExecutor)driver;
-        List<WebElement> numberOfGpusOptions = driver.findElements(By.xpath(numberOfGpusOptionsXpath));
-        openOptionsListAndSelectOption(defaultNumberOfGpusOptionId, numberOfGpusOptions, Integer.toString(numberOfGpus));
-        List<WebElement> gpuTypeOptions = driver.findElements(By.xpath(gpuTypeOptionsXpath));
-        openOptionsListAndSelectOption(defaultGpuTypeOptionId, gpuTypeOptions, gpuType);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(numberOfGpusXpath)));
+        WebElement numberOfGPUsField = driver.findElement(By.xpath(numberOfGpusXpath));
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        executor.executeScript("arguments[0].click();", numberOfGPUsField);
+        WebElement numberOfGPUsItem = driver.findElement(By.xpath(String.format(defaultNumberOfGpusOptionId, numberOfGpus)));
+        executor.executeScript("arguments[0].click();", numberOfGPUsItem);
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(gpuTypeOptionsXpath)));
+        WebElement typesOfGPUsField = driver.findElement(By.xpath(gpuTypeOptionsXpath));
+        JavascriptExecutor executor1 = (JavascriptExecutor)driver;
+        executor1.executeScript("arguments[0].click();", typesOfGPUsField);
+        WebElement typesOfGPUsItem = driver.findElement(By.xpath(String.format(defaultGpuTypeOptionId, numberOfGpus)));
+        executor1.executeScript("arguments[0].click();", typesOfGPUsItem);
+//        openOptionsListAndSelectOption(defaultNumberOfGpusOptionId, numberOfGpusOptions, Integer.toString(numberOfGpus));
+//        List<WebElement> gpuTypeOptions = driver.findElements(By.xpath(gpuTypeOptionsXpath));
+//        openOptionsListAndSelectOption(defaultGpuTypeOptionId, gpuTypeOptions, gpuType);
         return this;
     }
 
@@ -117,21 +133,6 @@ public class CalculatorForm extends AbstractPage {
 
     public CalculatorForm clickEmailEstimate() {
         driver.findElement(By.id(emailEstimateBtnId)).click();
-        return this;
-    }
-
-    public CalculatorForm checkGPUsValue() {
-
-        WebElement checkGpusCheckbox = driver.findElement(By.xpath(addGpusCheckboxXpath));
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
-        executor.executeScript("arguments[0].click();", checkGpusCheckbox);
-
-//        WebElement chekChekbox = driver.findElement(By.xpath(addGpusCheckboxXpath));
-//        JavascriptExecutor executor = (JavascriptExecutor)driver;
-//        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(addGpusCheckboxXpath)));
-//        WebElement instancesInputField = driver.findElement(By.xpath(addGpusCheckboxXpath));
-//        wait.until(ExpectedConditions.visibilityOf(instancesInputField));
-//        instancesInputField.click();
         return this;
     }
 
