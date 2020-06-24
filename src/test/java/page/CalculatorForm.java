@@ -20,7 +20,7 @@ public class CalculatorForm extends AbstractPage {
     private String numberOfGpusXpath = "//*[@id='select_337']//span[@class='md-select-icon']";
     private String gpuTypeOptionsXpath = "//*[@id='select_339']//span[@class='md-select-icon']";
     private String localSsdOptionsXpath = "//*[@id='select_170']//span[@class='md-select-icon']";
-    private String datacentrLocationOptionsXpath = "//*[@id='select_85']";
+    private String datacentrLocationXpath = "//*[@id='select_85']//span[@class='md-select-icon']";
     private String committedUsageOptionsXpath = "//*[@id='select_92']";
     private String totalEstimationTextSelectorXpath = "//button[@class='md-raised md-primary cpc-button md-button md-ink-ripple']/div[1]";
     private String emailInputFieldSelectorXpath = "//*[@id='input_386']";
@@ -28,10 +28,10 @@ public class CalculatorForm extends AbstractPage {
     private String defaultMachineTypeOptionId = "//div[contains(text(),'%s')]";
     private String addGpusCheckboxXpath = "//md-checkbox[@aria-label='Add GPUs']/div[@class='md-container md-ink-ripple']";
 //    private String addGpusCheckboxSelector = "md-checkbox[aria-label=\"Add GPUs\"]";
-    private String defaultNumberOfGpusOptionId = "//div[contains(text(),'%s')]";
+    private String defaultNumberOfGpusOptionId = "//md-option[@id='select_option_342']/div[contains(text(),'%s')]";
     private String defaultGpuTypeOptionId = "//div[contains(text(),'%s')]";
     private String defaultLocalSsdOptionId = "//div[contains(text(),'%s')]";
-    private String defaultDatacentrLocationOptionId = "select_option_172";
+    private String defaultDatacentrLocationOptionId = "//md-option[@id='select_option_181']/div[contains(text(),'%s')]";
     private String defaultCommittedUsageOptionId = "select_option_89";
     private String addToEstimateBtnSelector = "div:nth-child(1) > form button[aria-label=\"Add to Estimate\"]";
     //    private String totalEstimationTextSelector = "#resultBlock > md-card > md-card-content > div > div > div > h2 > b";
@@ -108,11 +108,11 @@ public class CalculatorForm extends AbstractPage {
     }
 
     public CalculatorForm selectDatacenterLocation(String datacenterLocation) {
-        WebElement localSsdOptions = driver.findElement(By.xpath(localSsdOptionsXpath));
+        WebElement datacentrLocationField = driver.findElement(By.xpath(datacentrLocationXpath));
         JavascriptExecutor executor1 = (JavascriptExecutor)driver;
-        executor1.executeScript("arguments[0].click();", localSsdOptions);
-        WebElement localSSDItem = driver.findElement(By.xpath(String.format(defaultLocalSsdOptionId, localSSD)));
-        executor1.executeScript("arguments[0].click();", localSSDItem);
+        executor1.executeScript("arguments[0].click();", datacentrLocationField);
+        WebElement datacentrLocationItem = driver.findElement(By.xpath(String.format(defaultDatacentrLocationOptionId, datacenterLocation)));
+        executor1.executeScript("arguments[0].click();", datacentrLocationItem);
 
 //        List<WebElement> datacentrLocationOptions = driver.findElements(By.xpath(datacentrLocationOptionsXpath));
 //        openOptionsListAndSelectOption(defaultDatacentrLocationOptionId, datacentrLocationOptions, datacenterLocation);
