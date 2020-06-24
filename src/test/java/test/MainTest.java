@@ -20,7 +20,6 @@ public class MainTest extends CommonConditions {
                 .openPricingPage()
                 .openCalculatorPage()
                 .getCalculatorInputForm()
-                .selectProduct("COMPUTE ENGINE") /*incorrect behavior*/
                 .setNumberOfInstances(4)
                 .selectMachineType("n1-standard-8 (vCPUs: 8, RAM: 30GB)")
                 .addGpus(1, "NVIDIA Tesla V100")
@@ -36,7 +35,7 @@ public class MainTest extends CommonConditions {
         BrowserTabSwitcher tabSwitcher = new BrowserTabSwitcher();
         tabSwitcher.switchToNewTab();
 
-        MailAdresCreator emailPage = new MailAdresCreator(driver).openPage();
+        MailAdresCreator emailPage = new MailAdresCreator(driver).openMailPage();
         String email = emailPage.getEmail();
 //        String email = "stubEmail@mil.com";
 

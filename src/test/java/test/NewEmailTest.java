@@ -9,14 +9,14 @@ public class NewEmailTest extends CommonConditions {
 
     @Test
     public void checkOpenNewEmailPage() {
-        new MailAdresCreator(driver).openPage();
+        new MailAdresCreator(driver).openMailPage();
         String url = driver.getCurrentUrl();
         Assert.assertEquals(url, "https://10minutemail.com/");
     }
 
     @Test
     public void checkEmailExists() {
-        String email = new MailAdresCreator(driver).openPage()
+        String email = new MailAdresCreator(driver)
                 .getEmail();
         Assert.assertTrue(email.contains("@"));
     }

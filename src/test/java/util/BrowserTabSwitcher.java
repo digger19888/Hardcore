@@ -6,22 +6,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.FindBy;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Condition;
 
 public class BrowserTabSwitcher {
 
-    private static final String LOG_MESSAGE = "try";
     private static final Logger LOGGER = LogManager.getRootLogger();
     private String currentBrowserTab;
     private String currentFrame;
     WebDriver driver = new ChromeDriver();
 
     public void switchToNewTab() {
-        LOGGER.info(LOG_MESSAGE);
         saveCurrentBrowserTabAndFrame();
         FormJSExecutor.openNewBrowserTab();
         ArrayList<String> browserTabs = new ArrayList<>(driver.getWindowHandles());
@@ -29,13 +25,11 @@ public class BrowserTabSwitcher {
     }
 
     public void closeCurrentWindowAndSwitchBackToPreviousTab() {
-        LOGGER.info(LOG_MESSAGE);
         driver.close();
         switchBackToPreviousTab();
     }
 
     public void switchBackToPreviousTab() {
-        LOGGER.info(LOG_MESSAGE);
         if (currentBrowserTab != null) {
             driver.switchTo().window(currentBrowserTab);
         }
@@ -46,7 +40,6 @@ public class BrowserTabSwitcher {
     }
 
     public void switchToNextToCurrentTab() {
-        LOGGER.info(LOG_MESSAGE);
         saveCurrentBrowserTabAndFrame();
         ArrayList<String> browserTabs = new ArrayList<>(driver.getWindowHandles());
         int tabIndex = browserTabs.indexOf(currentBrowserTab);
@@ -71,7 +64,6 @@ public class BrowserTabSwitcher {
     }
 
     private boolean switchToIframe(String targetIframeSrc) {
-        LOGGER.info(LOG_MESSAGE);
         List<WebElement> iframes = driver.findElements(By.cssSelector("iframe[src]"));
         boolean isFound = false;
 

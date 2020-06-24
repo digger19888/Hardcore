@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.is;
 public class OpenMainPageTest extends CommonConditions {
     @Test
     public void checkOpenMainPage() {
-        new MainPage(driver).openCloudProductsPage();
+        new MainPage(driver).openMainPage();
         assertThat("https://cloud.google.com/", is(equalTo(driver.getCurrentUrl())));
     }
 

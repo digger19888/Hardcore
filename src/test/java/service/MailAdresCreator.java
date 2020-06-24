@@ -12,7 +12,6 @@ import static util.RowCutter.getValueFromJsonRow;
 
 public class MailAdresCreator extends AbstractPage {
 
-    private static final String LOG_MESSAGE = "try";
     private static final String EMAIL_SERVICE_URL = "https://10minutemail.com/";
     private static final String EMAIL_ADDRESS_URL = "https://10minutemail.com/session/address";
 
@@ -24,8 +23,7 @@ public class MailAdresCreator extends AbstractPage {
         super(driver);
     }
 
-    public MailAdresCreator openPage() {
-        LOGGER.info(LOG_MESSAGE);
+    public MailAdresCreator openMailPage() {
         driver.navigate().to(EMAIL_SERVICE_URL);
 //        wait.until(ExpectedConditions.visibilityOf(email_counter));
 //        email_counter = driver.findElement(By.xpath("#inbox_count_number"));
@@ -35,8 +33,6 @@ public class MailAdresCreator extends AbstractPage {
     }
 
     public String getEmail() {
-        LOGGER.info(LOG_MESSAGE);
-
 //        BrowserTabSwitcher tabSwitcher = new BrowserTabSwitcher();
 //        tabSwitcher.switchToNewTab();
 
@@ -49,7 +45,6 @@ public class MailAdresCreator extends AbstractPage {
     }
 
     public String getTotalEstimationMessage() throws InterruptedException {
-        LOGGER.info(LOG_MESSAGE);
         waitUntilEmailReceived();
         email_top.click();
         wait.until(ExpectedConditions.visibilityOf(total_estimatioin_message));
