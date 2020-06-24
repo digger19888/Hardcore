@@ -22,6 +22,7 @@ public class MainTest extends CommonConditions {
                 .getCalculatorInputForm()
                 .setNumberOfInstances(4)
                 .selectMachineType("n1-standard-8 (vCPUs: 8, RAM: 30GB)")
+                .checkGPUsValue()
                 .addGpus(1, "NVIDIA Tesla V100")
                 .selectLocalSSD("2x375 Gb")
                 .selectDatacenterLocation("Frankfurt (europe-west3)")
