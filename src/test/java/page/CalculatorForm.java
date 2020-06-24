@@ -17,9 +17,9 @@ public class CalculatorForm extends AbstractPage {
 //    private List<WebElement> productsOptions = driver.findElements(By.xpath("#ul-0 > li"));
     private String instancesInputFieldXpath = "//input[@id='input_58']";
     private String machineTypeFieldXpath = "//*[@id='select_83']//span[@class]";
-    private String numberOfGpusXpath = "//*[@id='select_453']//span[@class='md-select-icon']";
-    private String gpuTypeOptionsXpath = "//*[@id='select_455']//span[@class='md-select-icon']";
-    private String localSsdOptionsXpath = "//*[@id='select_170']";
+    private String numberOfGpusXpath = "//*[@id='select_337']//span[@class='md-select-icon']";
+    private String gpuTypeOptionsXpath = "//*[@id='select_339']//span[@class='md-select-icon']";
+    private String localSsdOptionsXpath = "//*[@id='select_170']//span[@class='md-select-icon']";
     private String datacentrLocationOptionsXpath = "//*[@id='select_85']";
     private String committedUsageOptionsXpath = "//*[@id='select_92']";
     private String totalEstimationTextSelectorXpath = "//button[@class='md-raised md-primary cpc-button md-button md-ink-ripple']/div[1]";
@@ -30,7 +30,7 @@ public class CalculatorForm extends AbstractPage {
 //    private String addGpusCheckboxSelector = "md-checkbox[aria-label=\"Add GPUs\"]";
     private String defaultNumberOfGpusOptionId = "//div[contains(text(),'%s')]";
     private String defaultGpuTypeOptionId = "//div[contains(text(),'%s')]";
-    private String defaultLocalSsdOptionId = "select_option_231";
+    private String defaultLocalSsdOptionId = "//div[contains(text(),'%s')]";
     private String defaultDatacentrLocationOptionId = "select_option_172";
     private String defaultCommittedUsageOptionId = "select_option_89";
     private String addToEstimateBtnSelector = "div:nth-child(1) > form button[aria-label=\"Add to Estimate\"]";
@@ -81,35 +81,41 @@ public class CalculatorForm extends AbstractPage {
         return this;
     }
 
-    public CalculatorForm addGpus(int numberOfGpus, String gpuType) {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(numberOfGpusXpath)));
+    public CalculatorForm addGpus(String numberOfGpus, String gpuType) {
+//        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(numberOfGpusXpath)));
         WebElement numberOfGPUsField = driver.findElement(By.xpath(numberOfGpusXpath));
         JavascriptExecutor executor = (JavascriptExecutor)driver;
         executor.executeScript("arguments[0].click();", numberOfGPUsField);
         WebElement numberOfGPUsItem = driver.findElement(By.xpath(String.format(defaultNumberOfGpusOptionId, numberOfGpus)));
         executor.executeScript("arguments[0].click();", numberOfGPUsItem);
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(gpuTypeOptionsXpath)));
         WebElement typesOfGPUsField = driver.findElement(By.xpath(gpuTypeOptionsXpath));
         JavascriptExecutor executor1 = (JavascriptExecutor)driver;
         executor1.executeScript("arguments[0].click();", typesOfGPUsField);
-        WebElement typesOfGPUsItem = driver.findElement(By.xpath(String.format(defaultGpuTypeOptionId, numberOfGpus)));
+        WebElement typesOfGPUsItem = driver.findElement(By.xpath(String.format(defaultGpuTypeOptionId, gpuType)));
         executor1.executeScript("arguments[0].click();", typesOfGPUsItem);
-//        openOptionsListAndSelectOption(defaultNumberOfGpusOptionId, numberOfGpusOptions, Integer.toString(numberOfGpus));
-//        List<WebElement> gpuTypeOptions = driver.findElements(By.xpath(gpuTypeOptionsXpath));
-//        openOptionsListAndSelectOption(defaultGpuTypeOptionId, gpuTypeOptions, gpuType);
         return this;
     }
 
     public CalculatorForm selectLocalSSD(String localSSD) {
-        List<WebElement> localSsdOptions = driver.findElements(By.xpath(localSsdOptionsXpath));
-        openOptionsListAndSelectOption(defaultLocalSsdOptionId, localSsdOptions, localSSD);
+        WebElement localSsdOptions = driver.findElement(By.xpath(localSsdOptionsXpath));
+        JavascriptExecutor executor1 = (JavascriptExecutor)driver;
+        executor1.executeScript("arguments[0].click();", localSsdOptions);
+        WebElement localSSDItem = driver.findElement(By.xpath(String.format(defaultLocalSsdOptionId, localSSD)));
+        executor1.executeScript("arguments[0].click();", localSSDItem);
+
         return this;
     }
 
     public CalculatorForm selectDatacenterLocation(String datacenterLocation) {
-        List<WebElement> datacentrLocationOptions = driver.findElements(By.xpath(datacentrLocationOptionsXpath));
-        openOptionsListAndSelectOption(defaultDatacentrLocationOptionId, datacentrLocationOptions, datacenterLocation);
+        WebElement localSsdOptions = driver.findElement(By.xpath(localSsdOptionsXpath));
+        JavascriptExecutor executor1 = (JavascriptExecutor)driver;
+        executor1.executeScript("arguments[0].click();", localSsdOptions);
+        WebElement localSSDItem = driver.findElement(By.xpath(String.format(defaultLocalSsdOptionId, localSSD)));
+        executor1.executeScript("arguments[0].click();", localSSDItem);
+
+//        List<WebElement> datacentrLocationOptions = driver.findElements(By.xpath(datacentrLocationOptionsXpath));
+//        openOptionsListAndSelectOption(defaultDatacentrLocationOptionId, datacentrLocationOptions, datacenterLocation);
         return this;
     }
 

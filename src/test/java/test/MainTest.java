@@ -23,8 +23,8 @@ public class MainTest extends CommonConditions {
                 .setNumberOfInstances(4)
                 .selectMachineType("n1-standard-8 (vCPUs: 8, RAM: 30GB)")
                 .checkGPUsValue()
-                .addGpus(1, "NVIDIA Tesla V100")
-                .selectLocalSSD("2x375 Gb")
+                .addGpus("1", "NVIDIA Tesla V100")
+                .selectLocalSSD("2x375 GB")
                 .selectDatacenterLocation("Frankfurt (europe-west3)")
                 .selectCommittedUsage("1 Year")
                 .clickAddToEstimate();
