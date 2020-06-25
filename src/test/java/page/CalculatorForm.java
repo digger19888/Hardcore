@@ -13,48 +13,32 @@ import static util.FormJSExecutor.clickElementByCss;
 
 public class CalculatorForm extends AbstractPage {
 
-    //    private String  productInputFieldXpath = "#input-0";
-//    private List<WebElement> productsOptions = driver.findElements(By.xpath("#ul-0 > li"));
     private String instancesInputFieldXpath = "//input[@id='input_58']";
     private String machineTypeFieldXpath = "//*[@id='select_83']//span[@class]";
     private String numberOfGpusXpath = "//*[@id='select_337']//span[@class='md-select-icon']";
     private String gpuTypeOptionsXpath = "//*[@id='select_339']//span[@class='md-select-icon']";
     private String localSsdOptionsXpath = "//*[@id='select_170']//span[@class='md-select-icon']";
     private String datacentrLocationXpath = "//*[@id='select_85']//span[@class='md-select-icon']";
-    private String committedUsageOptionsXpath = "//*[@id='select_92']";
-    private String totalEstimationTextSelectorXpath = "//button[@class='md-raised md-primary cpc-button md-button md-ink-ripple']/div[1]";
-    private String emailInputFieldSelectorXpath = "//*[@id='input_386']";
+    private String committedUsageXpath = "//*[@id='select_92']//span[@class='md-select-icon']";
+    private String totalEstimationTextXpath = "#resultBlock > md-card > md-card-content > div > div > div > h2 > b";
+    private String emailInputFieldXpath = "//*[@id='input_399']";
 
-    private String defaultMachineTypeOptionId = "//div[contains(text(),'%s')]";
+    private String machineTypeId = "//div[contains(text(),'%s')]";
     private String addGpusCheckboxXpath = "//md-checkbox[@aria-label='Add GPUs']/div[@class='md-container md-ink-ripple']";
-//    private String addGpusCheckboxSelector = "md-checkbox[aria-label=\"Add GPUs\"]";
-    private String defaultNumberOfGpusOptionId = "//md-option[@id='select_option_342']/div[contains(text(),'%s')]";
-    private String defaultGpuTypeOptionId = "//div[contains(text(),'%s')]";
-    private String defaultLocalSsdOptionId = "//div[contains(text(),'%s')]";
-    private String defaultDatacentrLocationOptionId = "//md-option[@id='select_option_181']/div[contains(text(),'%s')]";
-    private String defaultCommittedUsageOptionId = "select_option_89";
-    private String addToEstimateBtnSelector = "div:nth-child(1) > form button[aria-label=\"Add to Estimate\"]";
+    private String numberOfGpusId = "//md-option[@id='select_option_342']/div[contains(text(),'%s')]";
+    private String gpuTypeId = "//div[contains(text(),'%s')]";
+    private String localSsdId = "//div[contains(text(),'%s')]";
+    private String datacentrLocationId = "//md-option[@id='select_option_181']/div[contains(text(),'%s')]";
+    private String committedUsageId = "//md-option[@id='select_option_90']/div[contains(text(),'%s')]";
+    private String addToEstimateBtnXpath = "//button[@ng-click='listingCtrl.addComputeServer(ComputeEngineForm);']";//"//button[@aria-label='Add to Estimate']/div[1]";
     //    private String totalEstimationTextSelector = "#resultBlock > md-card > md-card-content > div > div > div > h2 > b";
     private String emailEstimateBtnId = "email_quote";
     //    private String emailInputFieldSelector = "form[name=\"emailForm\"] input[ng-model=\"emailQuote.user.email\"]";
-    private String sendEmailBtnSelector = "form[name=\"emailForm\"] button[aria-label=\"Send Email\"]";
+    private String sendEmailBtnSelector = "//button[contains(@aria-label,'Send Email')]";//"form[name=\"emailForm\"] button[aria-label=\"Send Email\"]";
 
     public CalculatorForm(WebDriver driver) {
         super(driver);
     }
-
-//    public CalculatorForm selectProduct(String product) {
-//        WebElement productInputField = driver.findElement(By.xpath(productInputFieldXpath));
-//        wait.until(ExpectedConditions.visibilityOf(productInputField));
-//        productInputField.click();
-//
-//        for (WebElement element : productsOptions) {
-//            if (element.getText().equals("product")) {
-//                element.click();
-//            }
-//        }
-//        return this;
-//    }
 
     public CalculatorForm setNumberOfInstances(int numberOfInstances) {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(instancesInputFieldXpath)));
@@ -66,9 +50,9 @@ public class CalculatorForm extends AbstractPage {
 
     public CalculatorForm selectMachineType(String machineType) {
         WebElement machineTypeOptions = driver.findElement(By.xpath(machineTypeFieldXpath));
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", machineTypeOptions);
-        WebElement machineTypeItem = driver.findElement(By.xpath(String.format(defaultMachineTypeOptionId, machineType)));
+        WebElement machineTypeItem = driver.findElement(By.xpath(String.format(machineTypeId, machineType)));
         executor.executeScript("arguments[0].click();", machineTypeItem);
         return this;
     }
@@ -76,7 +60,7 @@ public class CalculatorForm extends AbstractPage {
     public CalculatorForm checkGPUsValue() {
 
         WebElement checkGpusCheckbox = driver.findElement(By.xpath(addGpusCheckboxXpath));
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", checkGpusCheckbox);
         return this;
     }
@@ -84,87 +68,77 @@ public class CalculatorForm extends AbstractPage {
     public CalculatorForm addGpus(String numberOfGpus, String gpuType) {
 //        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(numberOfGpusXpath)));
         WebElement numberOfGPUsField = driver.findElement(By.xpath(numberOfGpusXpath));
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", numberOfGPUsField);
-        WebElement numberOfGPUsItem = driver.findElement(By.xpath(String.format(defaultNumberOfGpusOptionId, numberOfGpus)));
+        WebElement numberOfGPUsItem = driver.findElement(By.xpath(String.format(numberOfGpusId, numberOfGpus)));
         executor.executeScript("arguments[0].click();", numberOfGPUsItem);
 
         WebElement typesOfGPUsField = driver.findElement(By.xpath(gpuTypeOptionsXpath));
-        JavascriptExecutor executor1 = (JavascriptExecutor)driver;
+        JavascriptExecutor executor1 = (JavascriptExecutor) driver;
         executor1.executeScript("arguments[0].click();", typesOfGPUsField);
-        WebElement typesOfGPUsItem = driver.findElement(By.xpath(String.format(defaultGpuTypeOptionId, gpuType)));
+        WebElement typesOfGPUsItem = driver.findElement(By.xpath(String.format(gpuTypeId, gpuType)));
         executor1.executeScript("arguments[0].click();", typesOfGPUsItem);
         return this;
     }
 
     public CalculatorForm selectLocalSSD(String localSSD) {
         WebElement localSsdOptions = driver.findElement(By.xpath(localSsdOptionsXpath));
-        JavascriptExecutor executor1 = (JavascriptExecutor)driver;
-        executor1.executeScript("arguments[0].click();", localSsdOptions);
-        WebElement localSSDItem = driver.findElement(By.xpath(String.format(defaultLocalSsdOptionId, localSSD)));
-        executor1.executeScript("arguments[0].click();", localSSDItem);
-
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", localSsdOptions);
+        WebElement localSSDItem = driver.findElement(By.xpath(String.format(localSsdId, localSSD)));
+        executor.executeScript("arguments[0].click();", localSSDItem);
         return this;
     }
 
     public CalculatorForm selectDatacenterLocation(String datacenterLocation) {
         WebElement datacentrLocationField = driver.findElement(By.xpath(datacentrLocationXpath));
-        JavascriptExecutor executor1 = (JavascriptExecutor)driver;
-        executor1.executeScript("arguments[0].click();", datacentrLocationField);
-        WebElement datacentrLocationItem = driver.findElement(By.xpath(String.format(defaultDatacentrLocationOptionId, datacenterLocation)));
-        executor1.executeScript("arguments[0].click();", datacentrLocationItem);
-
-//        List<WebElement> datacentrLocationOptions = driver.findElements(By.xpath(datacentrLocationOptionsXpath));
-//        openOptionsListAndSelectOption(defaultDatacentrLocationOptionId, datacentrLocationOptions, datacenterLocation);
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", datacentrLocationField);
+        WebElement datacentrLocationItem = driver.findElement(By.xpath(String.format(datacentrLocationId, datacenterLocation)));
+        executor.executeScript("arguments[0].click();", datacentrLocationItem);
         return this;
     }
 
     public CalculatorForm selectCommittedUsage(String committedUsage) {
-        List<WebElement> committedUsageOptions = driver.findElements(By.xpath(committedUsageOptionsXpath));
-        openOptionsListAndSelectOption(defaultCommittedUsageOptionId, committedUsageOptions, committedUsage);
+        WebElement committedUsageField = driver.findElement(By.xpath(committedUsageXpath));
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", committedUsageField);
+        WebElement committedUsageItem = driver.findElement(By.xpath(String.format(committedUsageId, committedUsage)));
+        executor.executeScript("arguments[0].click();", committedUsageItem);
         return this;
     }
 
     public CalculatorForm clickAddToEstimate() {
-        clickElementByCss(addToEstimateBtnSelector);
+        WebElement addToEstimateBtn = driver.findElement(By.xpath(addToEstimateBtnXpath));
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", addToEstimateBtn);
         return this;
     }
 
     public String getTotalEstimationText() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(totalEstimationTextSelectorXpath)));
-        WebElement totalEstimationTextSelector = driver.findElement(By.xpath(totalEstimationTextSelectorXpath));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(totalEstimationTextXpath)));
+        WebElement totalEstimationTextSelector = driver.findElement(By.cssSelector(totalEstimationTextXpath));
         String result = totalEstimationTextSelector.getText();
         return RowCutter.removeCharsBeforeColon(result);
     }
 
     public CalculatorForm clickEmailEstimate() {
-        driver.findElement(By.id(emailEstimateBtnId)).click();
+        WebElement emailEstimateBtn = driver.findElement(By.id(emailEstimateBtnId));
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", emailEstimateBtn);
         return this;
     }
 
     public CalculatorForm sendEstimateToEmail(String email) {
         driver.switchTo().activeElement();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(emailInputFieldSelectorXpath)));
-        WebElement emailInputFieldSelector = driver.findElement(By.xpath(emailInputFieldSelectorXpath));
-        emailInputFieldSelector.sendKeys(email);
-        clickElementByCss(sendEmailBtnSelector);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(emailInputFieldXpath)));
+        WebElement emailInputField = driver.findElement(By.xpath(emailInputFieldXpath));
+        emailInputField.sendKeys(email);
+        WebElement sendEmailBtn = driver.findElement(By.xpath(sendEmailBtnSelector));
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", sendEmailBtn);
         return this;
     }
 
-    private void openOptionsListAndSelectOption(String defaultOptionId, List<WebElement> options, String filterValue) {
-        driver.findElement(By.id(defaultOptionId)).click();
-        selectOptionFromList(options, filterValue);
-    }
-
-    private void selectOptionFromList(List<WebElement> options, String searchedOptionText) {
-        options.stream()
-                .filter(element -> searchedOptionText.equalsIgnoreCase(element.getText())
-                        || searchedOptionText.equalsIgnoreCase(element.getText().trim())).findFirst()
-                .ifPresent(element -> driver.findElement(By.id("id")).click());
-    }
-
-//    public WebElement getInstancesInputField() {
-//        return this;
-//    }
 
 }

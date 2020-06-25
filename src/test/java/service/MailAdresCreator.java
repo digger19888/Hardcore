@@ -33,8 +33,8 @@ public class MailAdresCreator extends AbstractPage {
     }
 
     public String getEmail() {
-//        BrowserTabSwitcher tabSwitcher = new BrowserTabSwitcher();
-//        tabSwitcher.switchToNewTab();
+        BrowserTabSwitcher tabSwitcher = new BrowserTabSwitcher();
+        tabSwitcher.switchToNewTab();
 
         driver.navigate().to(EMAIL_ADDRESS_URL);
         String email = getValueFromJsonRow("body > pre");
