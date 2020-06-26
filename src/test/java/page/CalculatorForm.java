@@ -4,11 +4,10 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import util.RowCutter;
-import util.TestListener;
 
+import javax.swing.*;
 import java.util.ArrayList;
-
-import static util.RowCutter.getValueFromJsonRow;
+import java.util.Set;
 
 public class CalculatorForm extends AbstractPage {
 
@@ -21,11 +20,12 @@ public class CalculatorForm extends AbstractPage {
     private String committedUsageXpath = "//*[@id='select_92']//span[@class='md-select-icon']";
     private String totalEstimationTextXpath = "#resultBlock > md-card > md-card-content > div > div > div > h2 > b";
     private String emailInputFieldXpath = "//*[@id='input_399']";
-    private String totalEstimatioinMessageXpath = "\"#mobilepadding > td > h2\"";
+    private String totalEstimatioinMessageXpath = "//td[@class='from'][contains(.,'Google Cloud Sales')]";
     private String copyEmailAdressBtnXpath = "//a[@class='btn btn-big cetc'][contains(.,'Copy')]";
+private String wXpath = "//h2[@class='md-toolbar-tools'][contains(.,'Email Your Estimate')]";
 
-    private String emailCounterXpath = "#inbox_count_number";
-    private String emailTopXpath = "#mail_messages_content div.message_top";
+
+    private String totalEstimationEmailMessageTextXpath = "#mobilepadding > td > h2";
     private String machineTypeId = "//div[contains(text(),'%s')]";
     private String addGpusCheckboxXpath = "//md-checkbox[@aria-label='Add GPUs']/div[@class='md-container md-ink-ripple']";
     private String numberOfGpusId = "//md-option[@id='select_option_342']/div[contains(text(),'%s')]";
@@ -34,7 +34,7 @@ public class CalculatorForm extends AbstractPage {
     private String datacentrLocationId = "//md-option[@id='select_option_181']/div[contains(text(),'%s')]";
     private String committedUsageId = "//md-option[@id='select_option_90']/div[contains(text(),'%s')]";
     private String addToEstimateBtnXpath = "//button[@ng-click='listingCtrl.addComputeServer(ComputeEngineForm);']";//"//button[@aria-label='Add to Estimate']/div[1]";
-    private String emailEstimateBtnId = "email_quote";
+    private String emailEstimateBtnXpath = "//div[@class='layout-align-space-between-start layout-row']/button[contains(.,'Email Estimate')]";
     private String sendEmailBtnSelector = "//button[contains(@aria-label,'Send Email')]";//"form[name=\"emailForm\"] button[aria-label=\"Send Email\"]";
 
     public CalculatorForm(WebDriver driver) {
@@ -122,13 +122,11 @@ public class CalculatorForm extends AbstractPage {
         return RowCutter.removeCharsBeforeColon(result);
     }
 
-
     public CalculatorForm openNewBrowserTab() {
         ((JavascriptExecutor) driver).executeScript("window.open()");
         ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1)); //switches to new tab
         driver.get("https://www.minuteinbox.com/");
-//        ((JavascriptExecutor)driver).executeScript("window.open('https://10minutemail.com/session/address','_blank')");
         return this;
     }
 
@@ -141,23 +139,23 @@ public class CalculatorForm extends AbstractPage {
     }
 
     public CalculatorForm backToPreviousBrowserTab() {
-//        ((JavascriptExecutor)driver).executeScript("window.open()");
-        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(0)); //switches to previous
-//        driver.get("https://10minutemail.com/session/address");
-//        ((JavascriptExecutor)driver).executeScript("window.open('https://10minutemail.com/session/address','_blank')");
+        driver.navigate().refresh();
         return this;
     }
 
     public CalculatorForm clickEmailEstimate() {
-        WebElement emailEstimateBtn = driver.findElement(By.id(emailEstimateBtnId));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(emailEstimateBtnXpath)));
+        WebElement emailEstimateBtn = driver.findElement(By.xpath(emailEstimateBtnXpath));
+        wait.until(ExpectedConditions.visibilityOf(emailEstimateBtn));
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", emailEstimateBtn);
         return this;
     }
 
     public CalculatorForm sendEstimateToEmail() {
-//        driver.switchTo().activeElement();
+
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(emailInputFieldXpath)));
         WebElement emailInputField = driver.findElement(By.xpath(emailInputFieldXpath));
         JavascriptExecutor executor = (JavascriptExecutor) driver;
@@ -172,36 +170,29 @@ public class CalculatorForm extends AbstractPage {
         return this;
     }
 
-    public CalculatorForm openAnotherNewBrowserTab() {
-        ((JavascriptExecutor) driver).executeScript("window.open()");
+    public CalculatorForm switchBackEmailBrowserTab() {
+//        ((JavascriptExecutor) driver).executeScript("window.open()");
         ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(2)); //switches to new tab
-        driver.get("https://10minutemail.com/");
+        driver.switchTo().window(tabs.get(1)); //switches to email tab
+//        driver.get("https://www.minuteinbox.com/");
 //        ((JavascriptExecutor)driver).executeScript("window.open('https://10minutemail.com/session/address','_blank')");
         return this;
     }
 
-    public String getTotalEstimationMessage() throws InterruptedException {
-        WebElement emailCounter = driver.findElement(By.cssSelector(emailCounterXpath));
-        wait.until(ExpectedConditions.visibilityOf(emailCounter));
-        WebElement emailTop = driver.findElement(By.cssSelector(emailTopXpath));
-        wait.until(ExpectedConditions.visibilityOf(emailTop)).click();
-//        waitUntilEmailReceived();
-        WebElement totalEstimatioinMessage = driver.findElement(By.cssSelector(totalEstimatioinMessageXpath));
-        wait.until(ExpectedConditions.visibilityOf(totalEstimatioinMessage));
-        String estimation = totalEstimatioinMessage.getText();
-        LOGGER.info("total estimation text: " + estimation);
-        return RowCutter.removeCharsBeforeColon(estimation);
+    public CalculatorForm getTotalEstimationMessage() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(totalEstimatioinMessageXpath)));
+        WebElement totalEstimatioinMessage = driver.findElement(By.xpath(totalEstimatioinMessageXpath));
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", totalEstimatioinMessage);
+
+        return this;
     }
 
-//    private void waitUntilEmailReceived() throws InterruptedException {
-//        String count;
-//        int x = 0;
-//        do {
-//            count = emailCounterXpath.;
-//            LOGGER.info(String.format("iteration: %d value [%s]", x++, count));
-//            Thread.sleep(1000);
-//        } while ("0".equals(count));
-//    }
+    public String getTotalEstimationMessageText() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(totalEstimationEmailMessageTextXpath)));
+        WebElement totalEstimationTextSelector = driver.findElement(By.cssSelector(totalEstimationEmailMessageTextXpath));
+        String estimation = totalEstimationTextSelector.getText();
+        return RowCutter.removeCharsBeforeColon(estimation);
+    }
 
 }

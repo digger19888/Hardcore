@@ -35,8 +35,9 @@ public class MainTest extends CommonConditions {
         calculatorForm.backToPreviousBrowserTab();
         calculatorForm.clickEmailEstimate();
         calculatorForm.sendEstimateToEmail();
-        calculatorForm.openAnotherNewBrowserTab();
-        String estimationFromEmail = calculatorForm.getTotalEstimationMessage();
+        calculatorForm.switchBackEmailBrowserTab();
+        calculatorForm.getTotalEstimationMessage();
+        String estimationFromEmail = calculatorForm.getTotalEstimationMessageText();
         testListener.saveScreenshot("estimation_from_email");
 
         Assert.assertTrue(estimationFromSite.contains(estimationFromEmail));
