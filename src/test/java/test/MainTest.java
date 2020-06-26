@@ -4,8 +4,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.CalculatorForm;
 import page.MainPage;
-import service.MailAdresCreator;
-import util.BrowserTabSwitcher;
 import util.TestListener;
 
 public class MainTest extends CommonConditions {
@@ -29,21 +27,16 @@ public class MainTest extends CommonConditions {
                 .selectCommittedUsage("1 Year")
                 .clickAddToEstimate();
 
+
         String estimationFromSite = calculatorForm.getTotalEstimationText();
         testListener.saveScreenshot("estimation_from_site");
+        calculatorForm.openNewBrowserTab();
+        calculatorForm.getEmail();
+        calculatorForm.backToPreviousBrowserTab();
         calculatorForm.clickEmailEstimate();
-
-        BrowserTabSwitcher tabSwitcher = new BrowserTabSwitcher();
-        tabSwitcher.switchToNewTab();
-
-        MailAdresCreator emailPage = new MailAdresCreator(driver).openMailPage();
-        String email = emailPage.getEmail();
-//        String email = "stubEmail@mil.com";
-
-        tabSwitcher.switchBackToPreviousTab();
-        calculatorForm.sendEstimateToEmail(email);
-        tabSwitcher.switchToNextToCurrentTab();
-        String estimationFromEmail = emailPage.getTotalEstimationMessage();
+        calculatorForm.sendEstimateToEmail();
+        calculatorForm.openAnotherNewBrowserTab();
+        String estimationFromEmail = calculatorForm.getTotalEstimationMessage();
         testListener.saveScreenshot("estimation_from_email");
 
         Assert.assertTrue(estimationFromSite.contains(estimationFromEmail));
