@@ -23,6 +23,7 @@ public class CalculatorForm extends AbstractPage {
     private String totalEstimationTextXpath = "#resultBlock > md-card > md-card-content > div > div > div > h2 > b";
     private String emailInputFieldXpath = "//*[@id='input_404']";//"form[name=\"emailForm\"] input[ng-model=\"emailQuote.user.email\"]";
     private String totalEstimatioinMessageXpath = "//td[@class='from'][contains(.,'Google Cloud Sales')]";
+    private String emailInputField2Xpath = "//*[@id='input_386']";//"//div[@class='layout-row flex-100'][3]";
 //    private String copyEmailAdressBtnXpath = "//a[@class='btn btn-big cetc'][contains(.,'Copy')]";
 //    private String wXpath = "//h2[@class='md-toolbar-tools'][contains(.,'Email Your Estimate')]";
 
@@ -173,15 +174,40 @@ public class CalculatorForm extends AbstractPage {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("document.getElementById('" + emailInputField.getAttribute("id") + "').focus()");
 
-//        Actions actions = new Actions(driver);
-//        driver.findElement(By.xpath(emailInputFieldXpath)).sendKeys(Keys.chord(Keys.CONTROL, "v"));
+//        Actions builder = new Actions(driver);
+//        builder.keyDown(emailInputField, Keys.CONTROL).perform();
+//        builder.sendKeys(emailInputField, "v").perform();
+//        builder.keyUp(emailInputField, Keys.CONTROL).perform();
+//        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(emailInputField2Xpath)));
+//        WebElement emailInputField2 = driver.findElement(By.xpath(emailInputField2Xpath));
+
+        new Actions(driver ).contextClick(emailInputField)
+                .sendKeys(Keys.ARROW_DOWN)
+                .sendKeys(Keys.ARROW_DOWN)
+                .sendKeys(Keys.ARROW_DOWN)
+                .sendKeys(Keys.ARROW_DOWN)
+                .sendKeys(Keys.ARROW_DOWN)
+                .sendKeys(Keys.ARROW_DOWN)
+                .sendKeys(Keys.ENTER).perform();
+
+//        public string getTextOfElement(){
+//            string elementText = driver.findElement(By.Locator).getText();
+//            return elementText
+//        }
 //
-//        String myText = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-//        driver.findElement(By.name("to")).sendKeys(myText);
+//        public string enterTextInField (){
+//            driver.findElement(By.Locator).clear();
+//            driver.findElement(By.Locator).sendKeys(getTextOfElement());
+//        }
+//        Actions actions = new Actions(driver);
+//        actions.sendKeys(Keys.chord(Keys.LEFT_CONTROL, "v")).build().perform();
+//
+//        String email = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+//        driver.findElement(By.xpath(emailInputFieldXpath)).sendKeys(email);
 
 //        String data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
 //        emailInputField.sendKeys(data);
-
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(sendEmailBtnSelector)));
         WebElement sendEmailBtn = driver.findElement(By.xpath(sendEmailBtnSelector));
         JavascriptExecutor executor3 = (JavascriptExecutor) driver;
         executor3.executeScript("arguments[0].click();", sendEmailBtn);
