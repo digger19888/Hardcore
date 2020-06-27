@@ -7,12 +7,15 @@ import page.MailPage;
 import page.MainPage;
 import util.TestListener;
 
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
+
 public class MainTestTimely extends CommonConditions {
 
     private final TestListener testListener = new TestListener();
 
     @Test
-    public void checkEstimationsEquals() throws InterruptedException {
+    public void checkEstimationsEquals() throws InterruptedException, IOException, UnsupportedFlavorException {
         MailPage mailPage = new MailPage(driver).openMailPage()
                 .getEmail()
                 .openNewBrowserTab();

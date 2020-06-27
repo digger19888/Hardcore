@@ -11,6 +11,7 @@ public class DriverSingleton {
     private DriverSingleton(){}
     public static WebDriver getDriver(){
         if (null == driver){
+
             if ("firefox".equals(System.getProperty("browser"))) {
                 WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();

@@ -5,6 +5,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import util.RowCutter;
 
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CalculatorForm extends AbstractPage {
@@ -17,7 +21,7 @@ public class CalculatorForm extends AbstractPage {
     private String datacentrLocationXpath = "//*[@id='select_85']//span[@class='md-select-icon']";
     private String committedUsageXpath = "//*[@id='select_92']//span[@class='md-select-icon']";
     private String totalEstimationTextXpath = "#resultBlock > md-card > md-card-content > div > div > div > h2 > b";
-    private String emailInputFieldXpath = "form[name=\"emailForm\"] input[ng-model=\"emailQuote.user.email\"]";//"//*[@id='input_404']";
+    private String emailInputFieldXpath = "//*[@id='input_404']";//"form[name=\"emailForm\"] input[ng-model=\"emailQuote.user.email\"]";
     private String totalEstimatioinMessageXpath = "//td[@class='from'][contains(.,'Google Cloud Sales')]";
 //    private String copyEmailAdressBtnXpath = "//a[@class='btn btn-big cetc'][contains(.,'Copy')]";
 //    private String wXpath = "//h2[@class='md-toolbar-tools'][contains(.,'Email Your Estimate')]";
@@ -162,14 +166,21 @@ public class CalculatorForm extends AbstractPage {
         return this;
     }
 
-    public CalculatorForm sendEstimateToEmail() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(emailInputFieldXpath)));
-        WebElement emailInputField = driver.findElement(By.cssSelector(emailInputFieldXpath));
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].click();", emailInputField);
+    public CalculatorForm sendEstimateToEmail() throws IOException, UnsupportedFlavorException {
 
-        Actions actions = new Actions(driver);
-        actions.sendKeys(Keys.chord(Keys.LEFT_CONTROL, "v")).build().perform();
+//        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(emailInputFieldXpath)));
+        WebElement emailInputField = driver.findElement(By.xpath(emailInputFieldXpath));
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("document.getElementById('" + emailInputField.getAttribute("id") + "').focus()");
+
+//        Actions actions = new Actions(driver);
+//        driver.findElement(By.xpath(emailInputFieldXpath)).sendKeys(Keys.chord(Keys.CONTROL, "v"));
+//
+//        String myText = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+//        driver.findElement(By.name("to")).sendKeys(myText);
+
+//        String data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+//        emailInputField.sendKeys(data);
 
         WebElement sendEmailBtn = driver.findElement(By.xpath(sendEmailBtnSelector));
         JavascriptExecutor executor3 = (JavascriptExecutor) driver;
