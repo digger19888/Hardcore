@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public abstract class AbstractPage {
 
-//    static protected String emailName;
+    public static String emailName;
     protected WebDriver driver;
     protected WebDriverWait wait;
     //    protected abstract AbstractPage openPage();

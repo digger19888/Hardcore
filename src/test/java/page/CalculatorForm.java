@@ -23,12 +23,8 @@ public class CalculatorForm extends AbstractPage {
     private String totalEstimationTextXpath = "#resultBlock > md-card > md-card-content > div > div > div > h2 > b";
     private String emailInputFieldXpath = "//*[@id='input_404']";//"form[name=\"emailForm\"] input[ng-model=\"emailQuote.user.email\"]";
     private String totalEstimatioinMessageXpath = "//td[@class='from'][contains(.,'Google Cloud Sales')]";
-    private String emailInputField2Xpath = "//*[@id='input_386']";//"//div[@class='layout-row flex-100'][3]";
-//    private String copyEmailAdressBtnXpath = "//a[@class='btn btn-big cetc'][contains(.,'Copy')]";
-//    private String wXpath = "//h2[@class='md-toolbar-tools'][contains(.,'Email Your Estimate')]";
 
-
-    private String totalEstimationEmailMessageTextXpath = "#mobilepadding > td > h2";
+    private String totalEstimationEmailMessageTextXpath = "#mobilepadding >td>h2";//"//tr[@id='mobilepadding'] /td/h2";
     private String machineTypeId = "//div[contains(text(),'%s')]";
     private String addGpusCheckboxXpath = "//md-checkbox[@aria-label='Add GPUs']/div[@class='md-container md-ink-ripple']";
     private String numberOfGpusId = "//md-option[@id='select_option_342']/div[contains(text(),'%s')]";
@@ -39,9 +35,6 @@ public class CalculatorForm extends AbstractPage {
     private String addToEstimateBtnXpath = "//button[@ng-click='listingCtrl.addComputeServer(ComputeEngineForm);']";//"//button[@aria-label='Add to Estimate']/div[1]";
     private String emailEstimateBtnXpath = "//div[@class='layout-align-space-between-start layout-row']/button[@class='md-raised md-primary cpc-button md-button md-ink-ripple'][contains(@id,'quote')][contains(.,'Email Estimate')]";//"//div[@class='layout-align-space-between-start layout-row']/button[contains(.,'Email Estimate')]";
     private String sendEmailBtnSelector = "//button[contains(@aria-label,'Send Email')]";//"form[name=\"emailForm\"] button[aria-label=\"Send Email\"]";
-
-//    private String calculatorUrl;
-//    private String emailName;
 
     public CalculatorForm(WebDriver driver) {
         super(driver);
@@ -129,34 +122,6 @@ public class CalculatorForm extends AbstractPage {
         return RowCutter.removeCharsBeforeColon(result);
     }
 
-//    public CalculatorForm openNewBrowserTab() {
-//        ((JavascriptExecutor) driver).executeScript("window.open()");
-//        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-//        driver.switchTo().window(tabs.get(1)); //switches to new tab
-//        driver.get("https://www.minuteinbox.com/");
-//        return this;
-//    }
-
-//    public CalculatorForm getEmail() {
-//        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(copyEmailAdressBtnXpath)));
-//        WebElement copyEmailAdressBtn = driver.findElement(By.xpath(copyEmailAdressBtnXpath));
-//        JavascriptExecutor executor = (JavascriptExecutor) driver;
-//        executor.executeScript("arguments[0].click();", copyEmailAdressBtn);
-//        return this;
-//    }
-
-//    public CalculatorForm backToPreviousBrowserTab() {
-//        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-//        driver.switchTo().window(tabs.get(0)); //switches to previous
-//        driver.navigate().refresh();
-//        driver.get(calculatorUrl);
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        return this;
-//    }
 
     public CalculatorForm clickEmailEstimate() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(emailEstimateBtnXpath)));
@@ -167,46 +132,15 @@ public class CalculatorForm extends AbstractPage {
         return this;
     }
 
-    public CalculatorForm sendEstimateToEmail() throws IOException, UnsupportedFlavorException {
+    public CalculatorForm sendEstimateToEmail()  {
 
-//        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(emailInputFieldXpath)));
         WebElement emailInputField = driver.findElement(By.xpath(emailInputFieldXpath));
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("document.getElementById('" + emailInputField.getAttribute("id") + "').focus()");
 
-//        Actions builder = new Actions(driver);
-//        builder.keyDown(emailInputField, Keys.CONTROL).perform();
-//        builder.sendKeys(emailInputField, "v").perform();
-//        builder.keyUp(emailInputField, Keys.CONTROL).perform();
-//        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(emailInputField2Xpath)));
-//        WebElement emailInputField2 = driver.findElement(By.xpath(emailInputField2Xpath));
+            driver.findElement(By.xpath(emailInputFieldXpath)).clear();
+            driver.findElement(By.xpath(emailInputFieldXpath)).sendKeys(emailName);
 
-        new Actions(driver ).contextClick(emailInputField)
-                .sendKeys(Keys.ARROW_DOWN)
-                .sendKeys(Keys.ARROW_DOWN)
-                .sendKeys(Keys.ARROW_DOWN)
-                .sendKeys(Keys.ARROW_DOWN)
-                .sendKeys(Keys.ARROW_DOWN)
-                .sendKeys(Keys.ARROW_DOWN)
-                .sendKeys(Keys.ENTER).perform();
-
-//        public string getTextOfElement(){
-//            string elementText = driver.findElement(By.Locator).getText();
-//            return elementText
-//        }
-//
-//        public string enterTextInField (){
-//            driver.findElement(By.Locator).clear();
-//            driver.findElement(By.Locator).sendKeys(getTextOfElement());
-//        }
-//        Actions actions = new Actions(driver);
-//        actions.sendKeys(Keys.chord(Keys.LEFT_CONTROL, "v")).build().perform();
-//
-//        String email = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-//        driver.findElement(By.xpath(emailInputFieldXpath)).sendKeys(email);
-
-//        String data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-//        emailInputField.sendKeys(data);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(sendEmailBtnSelector)));
         WebElement sendEmailBtn = driver.findElement(By.xpath(sendEmailBtnSelector));
         JavascriptExecutor executor3 = (JavascriptExecutor) driver;
@@ -217,24 +151,9 @@ public class CalculatorForm extends AbstractPage {
     public CalculatorForm backToPreviousBrowserTab() {
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(0)); //switches to previous
-//        driver.navigate().refresh();
-//        driver.get(calculatorUrl);
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
         return this;
     }
 
-//    public CalculatorForm switchBackEmailBrowserTab() {
-////        ((JavascriptExecutor) driver).executeScript("window.open()");
-//        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-//        driver.switchTo().window(tabs.get(1)); //switches to email tab
-////        driver.get("https://www.minuteinbox.com/");
-////        ((JavascriptExecutor)driver).executeScript("window.open('https://10minutemail.com/session/address','_blank')");
-//        return this;
-//    }
 
     public CalculatorForm getTotalEstimationMessage() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(totalEstimatioinMessageXpath)));
@@ -246,9 +165,21 @@ public class CalculatorForm extends AbstractPage {
     }
 
     public String getTotalEstimationMessageText() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(totalEstimationEmailMessageTextXpath)));
-        WebElement totalEstimationTextSelector = driver.findElement(By.cssSelector(totalEstimationEmailMessageTextXpath));
-        String estimation = totalEstimationTextSelector.getText();
+        WebElement totalEstimationTextSelector = (WebElement) ((JavascriptExecutor) driver)
+                .executeScript("return arguments[0].innerHTML");
+//        WebElement totalEstimationTextSelector = driver.findElement(By.xpath(totalEstimationEmailMessage\"TextXpath));
+//        JavascriptExecutor executor = (JavascriptExecutor) driver;
+//        executor.executeScript("arguments[0].click();", totalEstimationTextSelector);
+
+//        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(totalEstimationEmailMessageTextXpath)));
+//        WebElement totalEstimationTextSelector = driver.findElement(By.xpath(totalEstimationEmailMessageTextXpath));
+//        WebElement totalEstimationTextSelector = driver.findElement(By.xpath(totalEstimationEmailMessageTextXpath));
+//        wait.until(ExpectedConditions.visibilityOf(totalEstimationTextSelector));
+//        WebElement totalEstimationTextSelector = driver.findElement(By.cssSelector(totalEstimationEmailMessageTextXpath));
+//        wait.until(ExpectedConditions.visibilityOf(totalEstimationTextSelector));
+//        String estimation = (String) ((JavascriptExecutor) driver).executeScript("document.innerHTML", totalEstimationTextSelector);
+
+      String estimation = totalEstimationTextSelector.getText();
         return RowCutter.removeCharsBeforeColon(estimation);
     }
 

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class MailPage extends AbstractPage {
 
     private String copyEmailAdressBtnXpath = "//a[@class='btn btn-big cetc'][contains(.,'Copy')]";
+    private String copyEmailAdressFieldXpath = "//div[@class='col-xs-12 email-col']/span[@id='email']";
 
     public MailPage(WebDriver driver) {
         super(driver);
@@ -39,5 +40,9 @@ public class MailPage extends AbstractPage {
         return this;
     }
 
+    public String getTextOfElement() {
+        emailName = driver.findElement(By.xpath(copyEmailAdressFieldXpath)).getText();
+        return emailName;
+    }
 
 }
