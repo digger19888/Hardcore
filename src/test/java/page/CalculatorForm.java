@@ -140,6 +140,12 @@ public class CalculatorForm extends AbstractPage {
         return RowCutter.removeCharsBeforeColon(estimation);
     }
 
+    public String getInstancesNumber() {
+        WebElement instancesInputField = driver.findElement(By.xpath(instancesNumberFieldXpath));
+        String numOfInstance = instancesInputField.getText();
+        return RowCutter.removeCharsAfterNumber(numOfInstance);
+    }
+
     private String instancesInputFieldXpath = "//input[@id='input_58']";
     private String machineTypeFieldXpath = "//*[@id='select_83']//span[@class]";
     private String numberOfGpusXpath = "//*[@id='select_337']//span[@class='md-select-icon']";
@@ -161,4 +167,5 @@ public class CalculatorForm extends AbstractPage {
     private String addToEstimateBtnXpath = "//button[@ng-click='listingCtrl.addComputeServer(ComputeEngineForm);']";
     private String emailEstimateBtnXpath = "//div[@class='layout-align-space-between-start layout-row']/button[@class='md-raised md-primary cpc-button md-button md-ink-ripple'][contains(@id,'quote')][contains(.,'Email Estimate')]";//"//div[@class='layout-align-space-between-start layout-row']/button[contains(.,'Email Estimate')]";
     private String sendEmailBtnSelector = "//button[contains(@aria-label,'Send Email')]";
+    private String instancesNumberFieldXpath = "//span[contains(@class,'ng-binding ng-scope')]";
 }

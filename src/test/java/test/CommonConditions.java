@@ -10,7 +10,7 @@ public class CommonConditions {
 
     @BeforeMethod()
     public void setUp() {
-       driver = DriverSingleton.getDriver();
+        driver = DriverSingleton.getDriver();
     }
 
     @AfterMethod(alwaysRun = true)

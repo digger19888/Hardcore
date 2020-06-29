@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class PricingPage extends AbstractPage {
 
     private String cloudPricingUrl = cloudBaseUrl + "pricing";
-    private String calculatorsLinkXpath = "//li/a[@href='/products/calculator']/div[1]";
+    private String calculatorsLinkXpath = "//div[@class='devsite-nav-item-title'][contains(.,'Calculators')]";//"//li/a[@href='/products/calculator']/div[1]";
 
     public PricingPage(WebDriver driver) {
         super(driver);

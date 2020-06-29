@@ -18,9 +18,9 @@ public class MainTest extends CommonConditions {
     public void checkEstimationsEquals() throws InterruptedException, IOException, UnsupportedFlavorException {
         MailPage mailPage = new MailPage(driver).openMailPage()
                 .getEmail();
-                mailPage.getTextOfElement();
-                mailPage.openNewBrowserTab();
-       CalculatorForm calculatorForm = new MainPage(driver)
+        mailPage.getTextOfElement();
+        mailPage.openNewBrowserTab();
+        CalculatorForm calculatorForm = new MainPage(driver)
                 .openCloudProductsPage()
                 .openPricingPage()
                 .openCalculatorPage()
