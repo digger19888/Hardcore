@@ -11,10 +11,10 @@ public abstract class AbstractPage {
     public static String emailName;
     protected WebDriver driver;
     protected WebDriverWait wait;
-    //    protected abstract AbstractPage openPage();
     protected static final Logger LOGGER = LogManager.getRootLogger();
     protected String cloudBaseUrl = "https://cloud.google.com/";
     protected String mailBaseUrl = "https://www.minuteinbox.com/";
+
     protected AbstractPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(this.driver, 50);

@@ -1,40 +1,15 @@
 package page;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import util.RowCutter;
 
-import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class CalculatorForm extends AbstractPage {
-
-    private String instancesInputFieldXpath = "//input[@id='input_58']";
-    private String machineTypeFieldXpath = "//*[@id='select_83']//span[@class]";
-    private String numberOfGpusXpath = "//*[@id='select_337']//span[@class='md-select-icon']";
-    private String gpuTypeOptionsXpath = "//*[@id='select_339']//span[@class='md-select-icon']";
-    private String localSsdOptionsXpath = "//*[@id='select_170']//span[@class='md-select-icon']";
-    private String datacentrLocationXpath = "//*[@id='select_85']//span[@class='md-select-icon']";
-    private String committedUsageXpath = "//*[@id='select_92']//span[@class='md-select-icon']";
-    private String totalEstimationTextXpath = "#resultBlock > md-card > md-card-content > div > div > div > h2 > b";
-    private String emailInputFieldXpath = "//*[@id='input_404']";//"form[name=\"emailForm\"] input[ng-model=\"emailQuote.user.email\"]";
-    private String totalEstimatioinMessageXpath = "//td[@class='from'][contains(.,'Google Cloud Sales')]";
-
-    private String totalEstimationEmailMessageTextXpath = "#mobilepadding >td>h2";//"//tr[@id='mobilepadding'] /td/h2";
-    private String machineTypeId = "//div[contains(text(),'%s')]";
-    private String addGpusCheckboxXpath = "//md-checkbox[@aria-label='Add GPUs']/div[@class='md-container md-ink-ripple']";
-    private String numberOfGpusId = "//md-option[@id='select_option_342']/div[contains(text(),'%s')]";
-    private String gpuTypeId = "//div[contains(text(),'%s')]";
-    private String localSsdId = "//div[contains(text(),'%s')]";
-    private String datacentrLocationId = "//md-option[@id='select_option_181']/div[contains(text(),'%s')]";
-    private String committedUsageId = "//md-option[@id='select_option_90']/div[contains(text(),'%s')]";
-    private String addToEstimateBtnXpath = "//button[@ng-click='listingCtrl.addComputeServer(ComputeEngineForm);']";//"//button[@aria-label='Add to Estimate']/div[1]";
-    private String emailEstimateBtnXpath = "//div[@class='layout-align-space-between-start layout-row']/button[@class='md-raised md-primary cpc-button md-button md-ink-ripple'][contains(@id,'quote')][contains(.,'Email Estimate')]";//"//div[@class='layout-align-space-between-start layout-row']/button[contains(.,'Email Estimate')]";
-    private String sendEmailBtnSelector = "//button[contains(@aria-label,'Send Email')]";//"form[name=\"emailForm\"] button[aria-label=\"Send Email\"]";
 
     public CalculatorForm(WebDriver driver) {
         super(driver);
@@ -58,7 +33,6 @@ public class CalculatorForm extends AbstractPage {
     }
 
     public CalculatorForm checkGPUsValue() {
-
         WebElement checkGpusCheckbox = driver.findElement(By.xpath(addGpusCheckboxXpath));
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", checkGpusCheckbox);
@@ -111,7 +85,6 @@ public class CalculatorForm extends AbstractPage {
         WebElement addToEstimateBtn = driver.findElement(By.xpath(addToEstimateBtnXpath));
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", addToEstimateBtn);
-//        calculatorUrl = driver.getCurrentUrl();
         return this;
     }
 
@@ -122,7 +95,6 @@ public class CalculatorForm extends AbstractPage {
         return RowCutter.removeCharsBeforeColon(result);
     }
 
-
     public CalculatorForm clickEmailEstimate() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(emailEstimateBtnXpath)));
         WebElement emailEstimateBtn = driver.findElement(By.xpath(emailEstimateBtnXpath));
@@ -132,14 +104,14 @@ public class CalculatorForm extends AbstractPage {
         return this;
     }
 
-    public CalculatorForm sendEstimateToEmail()  {
+    public CalculatorForm sendEstimateToEmail() {
 
         WebElement emailInputField = driver.findElement(By.xpath(emailInputFieldXpath));
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("document.getElementById('" + emailInputField.getAttribute("id") + "').focus()");
 
-            driver.findElement(By.xpath(emailInputFieldXpath)).clear();
-            driver.findElement(By.xpath(emailInputFieldXpath)).sendKeys(emailName);
+        driver.findElement(By.xpath(emailInputFieldXpath)).clear();
+        driver.findElement(By.xpath(emailInputFieldXpath)).sendKeys(emailName);
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(sendEmailBtnSelector)));
         WebElement sendEmailBtn = driver.findElement(By.xpath(sendEmailBtnSelector));
@@ -154,33 +126,39 @@ public class CalculatorForm extends AbstractPage {
         return this;
     }
 
-
     public CalculatorForm getTotalEstimationMessage() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(totalEstimatioinMessageXpath)));
         WebElement totalEstimatioinMessage = driver.findElement(By.xpath(totalEstimatioinMessageXpath));
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", totalEstimatioinMessage);
-
         return this;
     }
 
-    public String getTotalEstimationMessageText() {
-        WebElement totalEstimationTextSelector = (WebElement) ((JavascriptExecutor) driver)
-                .executeScript("return arguments[0].innerHTML");
-//        WebElement totalEstimationTextSelector = driver.findElement(By.xpath(totalEstimationEmailMessage\"TextXpath));
-//        JavascriptExecutor executor = (JavascriptExecutor) driver;
-//        executor.executeScript("arguments[0].click();", totalEstimationTextSelector);
-
-//        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(totalEstimationEmailMessageTextXpath)));
-//        WebElement totalEstimationTextSelector = driver.findElement(By.xpath(totalEstimationEmailMessageTextXpath));
-//        WebElement totalEstimationTextSelector = driver.findElement(By.xpath(totalEstimationEmailMessageTextXpath));
-//        wait.until(ExpectedConditions.visibilityOf(totalEstimationTextSelector));
-//        WebElement totalEstimationTextSelector = driver.findElement(By.cssSelector(totalEstimationEmailMessageTextXpath));
-//        wait.until(ExpectedConditions.visibilityOf(totalEstimationTextSelector));
-//        String estimation = (String) ((JavascriptExecutor) driver).executeScript("document.innerHTML", totalEstimationTextSelector);
-
-      String estimation = totalEstimationTextSelector.getText();
+    public String getTotalEstimationMessageText() throws InterruptedException {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("iframeMail")));
+        String estimation = (String) ((JavascriptExecutor) driver).executeScript("return document.getElementById('iframeMail').contentWindow.document.getElementsByTagName('h2')[0].textContent;");
         return RowCutter.removeCharsBeforeColon(estimation);
     }
 
+    private String instancesInputFieldXpath = "//input[@id='input_58']";
+    private String machineTypeFieldXpath = "//*[@id='select_83']//span[@class]";
+    private String numberOfGpusXpath = "//*[@id='select_337']//span[@class='md-select-icon']";
+    private String gpuTypeOptionsXpath = "//*[@id='select_339']//span[@class='md-select-icon']";
+    private String localSsdOptionsXpath = "//*[@id='select_170']//span[@class='md-select-icon']";
+    private String datacentrLocationXpath = "//*[@id='select_85']//span[@class='md-select-icon']";
+    private String committedUsageXpath = "//*[@id='select_92']//span[@class='md-select-icon']";
+    private String totalEstimationTextXpath = "#resultBlock > md-card > md-card-content > div > div > div > h2 > b";
+    private String emailInputFieldXpath = "//*[@id='input_404']";
+    private String totalEstimatioinMessageXpath = "//td[@class='from'][contains(.,'Google Cloud Sales')]";
+
+    private String machineTypeId = "//div[contains(text(),'%s')]";
+    private String addGpusCheckboxXpath = "//md-checkbox[@aria-label='Add GPUs']/div[@class='md-container md-ink-ripple']";
+    private String numberOfGpusId = "//md-option[@id='select_option_342']/div[contains(text(),'%s')]";
+    private String gpuTypeId = "//div[contains(text(),'%s')]";
+    private String localSsdId = "//div[contains(text(),'%s')]";
+    private String datacentrLocationId = "//md-option[@id='select_option_181']/div[contains(text(),'%s')]";
+    private String committedUsageId = "//md-option[@id='select_option_90']/div[contains(text(),'%s')]";
+    private String addToEstimateBtnXpath = "//button[@ng-click='listingCtrl.addComputeServer(ComputeEngineForm);']";
+    private String emailEstimateBtnXpath = "//div[@class='layout-align-space-between-start layout-row']/button[@class='md-raised md-primary cpc-button md-button md-ink-ripple'][contains(@id,'quote')][contains(.,'Email Estimate')]";//"//div[@class='layout-align-space-between-start layout-row']/button[contains(.,'Email Estimate')]";
+    private String sendEmailBtnSelector = "//button[contains(@aria-label,'Send Email')]";
 }
